@@ -3,7 +3,7 @@
    offline and never touches the network after the first visit.
    Nothing is ever uploaded; this file makes no outbound requests. */
 
-const CACHE = "daily-decan-v1";
+const CACHE = "daily-decan-v2";
 const SHELL = [
   "./",
   "./index.html",
@@ -15,11 +15,17 @@ const SHELL = [
 ];
 
 self.addEventListener("install", event => {
+  // cache:"reload" 绕过 HTTP 缓存，保证更新时拿到的是服务器上的新文件，
+  // 而不是浏览器缓存里的旧页面。逐个 put 而不是 addAll：任何一个文件
+  // 失败也不会让整次安装作废。
   event.waitUntil(
-    caches.open(CACHE)
-      .then(c => c.addAll(SHELL))
-      .then(() => self.skipWaiting())
-      .catch(() => self.skipWaiting())
+    caches.open(CACHE).then(c =>
+      Promise.all(SHELL.map(u =>
+        fetch(new Request(u, { cache: "reload" }))
+          .then(r => (r && r.ok) ? c.put(u, r) : null)
+          .catch(() => null)
+      ))
+    ).then(() => self.skipWaiting())
   );
 });
 
