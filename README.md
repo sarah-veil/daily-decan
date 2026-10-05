@@ -170,4 +170,16 @@ original work. The text of the 58 readings, the generative sigils, and the imple
 
 ---
 
+## Feedback is the point
+
+This is meant to be revised, not admired. The most useful thing you can send is not praise — it
+is the line that was **empty**, the one that could have applied to anybody:
+
+- **[Tell me what landed and what didn't](https://github.com/sarah-veil/daily-decan/issues/new?template=feedback.yml)** — includes a field for the Chinese prose, which is the thing I am least able to judge for myself.
+- **[The derivation is wrong](https://github.com/sarah-veil/daily-decan/issues/new?template=bug.yml)** — open the derivation panel, check it against any ephemeris, and paste what you found. Astronomy being off is a bug, not a matter of taste.
+
+You do not need to be nice. Specific beats kind.
+
+---
+
 *If you build something with this, I would like to see it. Open an issue.*

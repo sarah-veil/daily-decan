@@ -1,0 +1,52 @@
+name: 算错了 / Wrong derivation
+description: 天文旅错、旬位对不上、归约算错了 · the astronomy or the tables are wrong
+title: "[算错] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        这个 App 的推导是**可核对**的 —— 展开页面底部的「推导」面板，每一步的数字都在。
+
+        对着任何一本星历表查一下。**对不上就是 bug，我想知道。**
+
+        Every step is printed in the derivation panel at the bottom of the page.
+        Check it against any ephemeris. **If it disagrees, that is a bug and I want it.**
+
+  - type: input
+    id: date
+    attributes:
+      label: 哪一天 / Which date
+      description: 首页用的是你打开那天的日期；本命牌用的是你输入的出生日期。说清楚是哪一个。 / The daily card uses today's date; the birth card uses the date you typed. Say which.
+      placeholder: "2026-10-05"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: which
+    attributes:
+      label: 错的是哪张牌 / Which card is wrong
+      options:
+        - 今日之牌（月亮此刻旬位）
+        - 你的本命旬位（出生那天月亮旬位）
+        - 本命大牌（生日归约 1–22）
+        - 正逆位 / 月相
+        - 说不清，但数字不对
+    validations:
+      required: true
+
+  - type: textarea
+    id: got
+    attributes:
+      label: App 显示的 / What the app says
+      description: 把推导面板里那几行数字抄过来，或直接截图贴上来。 / Paste the numbers from the derivation panel, or drop a screenshot.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 你查到的 / What you found
+      description: 从哪儿查的？把来源写出来，我好去核。 / Where did you check? Name the source so I can verify it.
+    validations:
+      required: true

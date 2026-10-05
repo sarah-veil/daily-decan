@@ -1,0 +1,60 @@
+name: 反馈 / Feedback
+description: 哪句说到你了，哪句没有 · which line landed, which one didn't
+title: "[反馈] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        谢谢你来。不用写得客气 —— **说得具体比说得好听有用**。
+
+        Thanks for stopping by. No need to be polite about it — **specific beats kind**.
+
+  - type: dropdown
+    id: lang
+    attributes:
+      label: 你读的是哪个语言 / Which language did you read?
+      options:
+        - 中文
+        - English
+        - 两个都看了 / Both
+    validations:
+      required: true
+
+  - type: input
+    id: bd
+    attributes:
+      label: 你输入的出生日期 / The birth date you entered
+      description: 用来复现你看到的那张牌。不想给就留空。 / So I can reproduce the exact card. Leave blank if you'd rather not.
+
+  - type: textarea
+    id: landed
+    attributes:
+      label: 哪一句说到你了？ / Which line landed on you?
+      description: 具体是哪一段 —— 今日、若只做一件事、留意、你这张牌是什么、两张牌怎么碰面。也说说为什么。 / Name the section, and say why.
+      placeholder: |
+        「若只做一件事」那句 —— 因为我这周确实在跟人抢一个没人争的东西。
+    validations:
+      required: true
+
+  - type: textarea
+    id: missed
+    attributes:
+      label: 哪一句是废话？ / Which line was empty?
+      description: 判断标准很简单：**这句话套在任何人身上都成立吗？** 如果是，它就不该在这儿。 / The test is simple：**could that line apply to anybody?** If yes, it doesn't belong here.
+      placeholder: |
+        「留意」那段太笼统了，换成谁都能说。
+    validations:
+      required: true
+
+  - type: textarea
+    id: feeling
+    attributes:
+      label: 中文读起来像不像机翻？ / Does the Chinese read like a translation?
+      description: 这是我最没把握的一件事。像就是像，直说。 / This is the thing I can least judge for myself. If it reads stiff, say so.
+
+  - type: textarea
+    id: else
+    attributes:
+      label: 其他任何事 / Anything else
+      description: 分享图好不好用、手机上排版、想要什么功能、看不懂哪里。

@@ -117,7 +117,9 @@
               font:13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--gold2)}
   .note{font-size:12.5px;color:var(--dim);margin-top:12px}
   footer{text-align:center;color:var(--dim);font-size:12.5px;margin-top:40px;line-height:2}
-  footer a{color:var(--dim)}
+  footer a{color:var(--dim);border-bottom:1px solid rgba(255,255,255,.14)}
+  footer a:hover{color:var(--gold2)}
+  footer .dot{margin:0 8px;color:var(--line)}
   .lock{text-align:center;color:var(--dim);font-size:12.5px;margin-top:16px}
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
          background:var(--gold);color:#20180a;font-weight:600;font-size:14px;
@@ -202,7 +204,9 @@
 
   <footer>
     <span id="foot1"></span><br>
-    <a href="https://github.com/" id="foot2"></a>
+    <a href="https://github.com/sarah-veil/daily-decan" id="foot2" target="_blank" rel="noopener"></a>
+    <span class="dot">·</span>
+    <a href="https://github.com/sarah-veil/daily-decan/issues/new?template=feedback.yml" id="foot3" target="_blank" rel="noopener"></a>
   </footer>
 </div>
 <div class="toast" id="toast"></div>
@@ -451,6 +455,7 @@ const T = {
   dnote:"This is a designed system built on published correspondences (Golden Dawn <i>Book T</i> decan attributions and standard numerology reduction). It is not a random number generator, and it does not claim to predict anything.",
   f1:"No account. No cookies. No server. Everything above is computed in your browser.",
   f2:"Source on GitHub",
+  f3:"Tell me what landed and what didn't",
   decan:"decan", ruledby:"ruled by", moonin:"Moon in", yourarcana:"your arcana, from",
   s1:"Today is", s1b:"— one draw per day; there is no re-roll.",
   s2:"Julian day", s2b:", computed locally.",
@@ -485,6 +490,7 @@ const T = {
   dnote:"这是一套建立在公开对应关系上的设计系统（黄金黎明《Book T》旬表归属、标准命数归约）。它不是随机数生成器，也不声称能预测任何事。",
   f1:"无账号 · 无 cookie · 无服务器 · 以上全部在你的浏览器里计算",
   f2:"源码在 GitHub",
+  f3:"哪句说到你了，哪句没有",
   decan:"第", ruledby:"守护", moonin:"月亮在", yourarcana:"本命大牌，取自",
   s1:"今天是", s1b:"—— 一天一次，不能重抽。",
   s2:"儒略日", s2b:"，本地计算。",
@@ -639,7 +645,7 @@ function paintChrome(){
   $("t1").textContent=t.t1; $("t2").textContent=t.t2; $("t3").textContent=t.t3; $("t4").textContent=t.t4;
   $("copy").textContent=t.copy; $("save").textContent=t.save;
   $("dsum").textContent=t.dsum; $("dnote").innerHTML=t.dnote;
-  $("foot1").textContent=t.f1; $("foot2").textContent=t.f2;
+  $("foot1").textContent=t.f1; $("foot2").textContent=t.f2; $("foot3").textContent=t.f3;
   $("lzh").className = LANG==="zh" ? "on" : "";
   $("len").className = LANG==="en" ? "on" : "";
   document.documentElement.lang = LANG==="zh" ? "zh-CN" : "en";
