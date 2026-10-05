@@ -6,7 +6,7 @@ Most "daily card" apps roll a random number and dress it up. This one doesn't. Y
 today is the card of the **decan the Moon is actually standing in** — and every step of that
 calculation is printed on the page, in plain sight.
 
-**Live: [sarah-veil.github.io/daily-decan](https://sarah-veil.github.io/daily-decan/)** · Single file · No build step · MIT
+**Live: [sarah-veil.github.io/daily-decan](https://sarah-veil.github.io/daily-decan/)** · Single file · Installable (PWA) · Works offline · MIT
 
 ![The Daily Decan](screenshot.png)
 
@@ -51,6 +51,15 @@ for. If a line could apply to anybody, it does not belong here.
 
 **It speaks two languages.** The whole app is bilingual (English and Chinese). It opens in whichever language your browser asks for, with a toggle in the corner. The Chinese readings are written as Chinese rather than translated from the English — the cadence matters.
 
+**It installs like an app, and works with the wifi off.** There is a web app manifest and a
+service worker, so you can add it to a home screen or a dock and open it on a plane. The service
+worker caches the shell and makes no outbound requests of its own.
+
+**It leaves with you.** One button renders the day's reading to a 1080×1350 image — sigil, card,
+position and all four readings — ready for a story, a message, or a lock screen. On a phone it
+opens the system share sheet; on a desktop it downloads. The image is drawn on a canvas locally;
+nothing is uploaded to render it.
+
 **Nothing leaves your device.** No account, no cookies, no analytics, no server, no network call.
 The whole thing is one HTML file. You can run it from `file://` with the wifi off.
 
@@ -87,6 +96,20 @@ open daily-decan/index.html
 
 Works offline once loaded. Add it to a home screen and it behaves like an app.
 
+The repo ships everything a link preview and an install need:
+
+| File | Purpose |
+|---|---|
+| `og.png` | 1200×630 social preview (`og:image` / `twitter:image`) |
+| `manifest.webmanifest` | app name, colours, icons |
+| `icon-192.png`, `icon-512.png` | home-screen icons |
+| `icon-maskable-512.png` | Android adaptive icon |
+| `sw.js` | offline shell cache |
+
+If you fork this under a different account, update the absolute URLs in the `<head>` of
+`index.html` (`og:url`, `og:image`, `twitter:image`, `canonical`) and the footer URL drawn into
+the share image.
+
 ---
 
 ## Using it as a library
@@ -98,6 +121,7 @@ Everything is in one `<script>`, in plain ES2020 with no dependencies. The parts
 - `DECANS` — the 36 decan attributions as data
 - `sigil(card, decanIndex, planet, reversed)` — returns SVG, given any card
 - `birthArcana(iso)` — the reduction
+- `renderCardBlob()` — the share image, as a promise for a PNG `Blob`
 
 Fork it and swap in the Thoth deck's attributions, the 36 *strategemata*, or the Chinese
 twenty-eight mansions. The skeleton does not care what the table contains.

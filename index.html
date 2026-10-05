@@ -6,6 +6,30 @@
 <title>每日旬星 · The Daily Decan</title>
 <meta name="description" content="一天一张牌，由月亮此刻所在的旬位推出，不是随机抽取。七步推导全部摊开。中英双语。无账号、无追踪、纯本地计算。">
 <meta name="theme-color" content="#0e1020">
+<link rel="canonical" href="https://sarah-veil.github.io/daily-decan/">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Daily Decan">
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Daily Decan">
+<meta property="og:title" content="The Daily Decan · 每日旬星">
+<meta property="og:description" content="One card a day, derived from the decan the Moon occupies right now — not drawn at random. Every step of the derivation is shown.">
+<meta property="og:url" content="https://sarah-veil.github.io/daily-decan/">
+<meta property="og:image" content="https://sarah-veil.github.io/daily-decan/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Daily Decan — a tarot card derived from the Moon's current decan">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Daily Decan · 每日旬星">
+<meta name="twitter:description" content="One card a day, derived from the decan the Moon occupies right now — not drawn at random.">
+<meta name="twitter:image" content="https://sarah-veil.github.io/daily-decan/og.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='none' stroke='%23c8a24a' stroke-width='2'/><circle cx='16' cy='16' r='4' fill='%23c8a24a'/></svg>">
 <style>
   :root{
@@ -138,7 +162,7 @@
       <h3 id="t2"></h3><p id="r2"></p>
       <h3 id="t3"></h3><p id="r3"></p>
       <h3 id="t4"></h3><p class="lens" id="r4"></p>
-      <div class="row" style="margin-top:18px"><button class="ghost" id="copy"></button></div>
+      <div class="row" style="margin-top:18px"><button class="ghost" id="copy"></button><button class="ghost" id="save"></button></div>
       <p class="lock" id="lock"></p>
     </div>
 
@@ -294,41 +318,41 @@ const R_EN = {
 
 /* ── 36 条旬牌解读（中文，按中文语感重写，不是翻译）── */
 const R_ZH = {
-"Two of Wands":["该做的决定其实已经做了，只是你还把它当成”可选项”。现在真正的风险不是选错，是继续等。","把你在等的那件事说出口。说不出来，就不是在等，是在躲。","临门之前再找一个人确认一下。"],
-"Three of Wands":["之前发出去的东西还在路上。今天该做的是带着动作地等，不是再开一摊。","做一件只有”这事成了”才说得通的小事。","把着急打扮成勤快。"],
-"Four of Wands":["有个坎值得标记一下。不体面的进度也是进度，而且已经够完整，可以认了。","把一件做完的事讲给一个人听。别顺口贬低它。","跳过”认账”这一步，直接扑向下一件。"],
-"Five of Pentacles":["缺是缺，但比你感觉的窄。真正冷的那部分通常是被孤立，不是不够。","向一个具体的人要一样具体的东西。不要泛泛地”求帮忙”。","把倒霉的一周当成永久状态。"],
+"Two of Wands":["该做的决定其实已经做了，只是你还把它当成“可选项”。现在真正的风险不是选错，是继续等。","把你在等的那件事说出口。说不出来，就不是在等，是在躲。","临门之前再找一个人确认一下。"],
+"Three of Wands":["之前发出去的东西还在路上。今天该做的是带着动作地等，不是再开一摊。","做一件只有“这事成了”才说得通的小事。","把着急打扮成勤快。"],
+"Four of Wands":["有个坎值得标记一下。不体面的进度也是进度，而且已经够完整，可以认了。","把一件做完的事讲给一个人听。别顺口贬低它。","跳过“认账”这一步，直接扑向下一件。"],
+"Five of Pentacles":["缺是缺，但比你感觉的窄。真正冷的那部分通常是被孤立，不是不够。","向一个具体的人要一样具体的东西。不要泛泛地“求帮忙”。","把倒霉的一周当成永久状态。"],
 "Six of Pentacles":["给和收在某处失了衡，而且你清楚是哪处。带条件的慷慨不算慷慨。","给一样东西，不附带后续；或者收下一样东西，不马上还回去。","在一段不是交易的关系里记账。"],
 "Seven of Pentacles":["你在播种和收获之间，这段最没意思也最要紧。没出问题，只是还没完。","看看你已经种出了什么，而不是还缺什么。","把东西拔起来看它长没长。"],
-"Eight of Swords":["困住你的，更多是”你对处境的描述”，而不是处境本身。你有没数进去的选项。","写下三个你认为”不可能”的做法，然后逐个查：是真的堵死了吗。","把陷阱描述得更细致，而不是伸手试一下。"],
+"Eight of Swords":["困住你的，更多是“你对处境的描述”，而不是处境本身。你有没数进去的选项。","写下三个你认为“不可能”的做法，然后逐个查：是真的堵死了吗。","把陷阱描述得更细致，而不是伸手试一下。"],
 "Nine of Swords":["有件担忧半夜一直在跑，而证据很少。难受是真的，那个预测大概是假的。","把最坏的情况说给一个人听。说出来它就缩水。","反复排练一场还没发生的对话。"],
 "Ten of Swords":["有件事已经结束了，结束本身是解脱。别试图把它救成另一个更好的版本。","把一样东西正式收尾——一根线、一个标签页、一个念想——让它别再收租。","跟一个已经发生过的结局讨价还价。"],
-"Two of Cups":["一段关系是通的、是双向的，只是被晾着没用。不说出口的暖意，对方读成冷淡。","把那句暖的话平实地说了，别拿玩笑当挡箭牌。","默认对方”应该知道”。"],
+"Two of Cups":["一段关系是通的、是双向的，只是被晾着没用。不说出口的暖意，对方读成冷淡。","把那句暖的话平实地说了，别拿玩笑当挡箭牌。","默认对方“应该知道”。"],
 "Three of Cups":["今天的好在人身上。你一个人扛着的那件事，进了人群会轻一些。","联系那个你想见好几个月的人，把日子定下来。","习惯性地推掉邀约。"],
-"Four of Cups":["有东西递到你面前，你在越过它看别的更有意思的。无聊和”没有”是两回事。","把你一直瞧不上的那件事认真对待一个小时，看它站不站得住。","对桌上现有的东西表示轻蔑。"],
+"Four of Cups":["有东西递到你面前，你在越过它看别的更有意思的。无聊和“没有”是两回事。","把你一直瞧不上的那件事认真对待一个小时，看它站不站得住。","对桌上现有的东西表示轻蔑。"],
 "Five of Wands":["摩擦不小，但并没有真正的分歧。大家是在抢位置，不是在争一个不同的结果。","问问对方到底要什么。往往不是你设想的那个争点。","赢下一个根本没人在争的点。"],
 "Six of Wands":["认可来了，你的第一反应是推开。推开是有意把自己缩小。","别人夸你，回两个字，就此打住。别把话递回去。","解释这个好结果是运气。"],
 "Seven of Wands":["你在高地上守着一个位置。这是好地方，也很耗人。","挑出哪几条反对意见值得回答，其余的故意不理。","守整座山，其实只有一个门要紧。"],
 "Eight of Pentacles":["本事就是在这些不好看的重复里长出来的。这里的枯燥，是熟练的价钱。","一次慢慢做、回头检查，好过五次图快。","想找一条跳过重复的捷径。"],
-"Nine of Pentacles":["自给自足跑通了，却悄悄变成了一堵墙。独立和孤立不是一回事。","享受一样你自己挣来的东西——然后请一个人进来，哪怕一会儿。","把”不需要人”和”不想要人”混为一谈。"],
+"Nine of Pentacles":["自给自足跑通了，却悄悄变成了一堵墙。独立和孤立不是一回事。","享受一样你自己挣来的东西——然后请一个人进来，哪怕一会儿。","把“不需要人”和“不想要人”混为一谈。"],
 "Ten of Pentacles":["现在要紧的是长线。今天的小决定，其实是在决定什么能留下来。","做一件一年后才见效的事。","为了这一周，牺牲这十年。"],
-"Two of Swords":["有个选择被你刻意举在臂展之外，胳膊快撑不住了。不决定，本身也是有代价的决定。","给自己定一个必须决定的期限，写下来。","用”再收集点信息”来拖延。"],
+"Two of Swords":["有个选择被你刻意举在臂展之外，胳膊快撑不住了。不决定，本身也是有代价的决定。","给自己定一个必须决定的期限，写下来。","用“再收集点信息”来拖延。"],
 "Three of Swords":["有个伤是具体的，值得说清楚，而不是绕开走。这里的清楚，比含糊更不疼。","把实际发生的事，用平实的话讲给一个人听。","对这件事表现得很高尚，而不是很准确。"],
 "Four of Swords":["今天休息是正事，不是干完活的奖赏。恢复是工作的一部分，不是它的中断。","取消一件事。不是全部——一件。","硬扛，并把它叫做自律。"],
 "Five of Cups":["注意力钉在失去的东西上，看不见还站着的那些。难过是允许的，算账也是允许的。","说出一样你还有的、而一年前的你会求之不得的东西。","让这一处失去，给所有事定调。"],
 "Six of Cups":["早年的某样东西又有了关联——不是怀旧，是你身上还没做完的一块。","给很久以前的某个人写点什么，不必发出去。","美化一个你其实并不想回去的过去。"],
-"Seven of Cups":["选择太多，大多好看，且一个都没验过。想象在做现实该做的事。","挑一个，今天就迈最小的一步。","被那个”不可能失败”的版本迷住。"],
+"Seven of Cups":["选择太多，大多好看，且一个都没验过。想象在做现实该做的事。","挑一个，今天就迈最小的一步。","被那个“不可能失败”的版本迷住。"],
 "Eight of Wands":["事情快起来了，消息其实已经在路上。这时候的拖延不是谨慎，是摩擦。","把你在改的那封东西发出去。已经够完整了。","反复修订一件只需要寄出的东西。"],
-"Nine of Wands":["你累了，但比你以为的更接近终点。守好最后一程是对的，重打旧仗不是。","只做下一件必须做的事，不是把剩下的全做完。","把疲惫当成”我错了”的证据。"],
+"Nine of Wands":["你累了，但比你以为的更接近终点。守好最后一程是对的，重打旧仗不是。","只做下一件必须做的事，不是把剩下的全做完。","把疲惫当成“我错了”的证据。"],
 "Ten of Wands":["你多扛了一份，因为你从没正式放下过任何一份。是累积造成的过载，不是危机。","今天把一项责任明确交还给一个指名的人。","当那个唯一知道它有多重的人。"],
-"Two of Pentacles":["杂耍是本事，但不是长久之计。有一样东西必须离开这个循环。","挑出你要放手的那一个，并且故意让它掉下去。","以”我能扛”为荣，而不是去修那个担子。"],
+"Two of Pentacles":["杂耍是本事，但不是长久之计。有一样东西必须离开这个循环。","挑出你要放手的那一个，并且故意让它掉下去。","以“我能扛”为荣，而不是去修那个担子。"],
 "Three of Pentacles":["这活多一双眼睛会更好，而开口的代价比你以为的小。手艺在成为独门之前，先是协作。","把一件没做完的东西给一个你信得过眼光的人看。","把稿子保护起来，不让它拿到该拿的反馈。"],
 "Four of Pentacles":["攥着的成本已经高过那东西本身。握得太紧的安全感，不再是安全感。","有意识地花掉一样东西——钱、时间，或者一个位置。","把控制当成安全。"],
 "Five of Swords":["有一场赢，你可能该让掉。既对又孤单，这两件事同时到的次数比人想的多。","放过一场争论，但不必让掉背后的那个点。","拿走那个要拿关系来换的胜利。"],
-"Six of Swords":["一个过渡正在进行，难的部分已经过去了。新地方还不激动人心——只是安静些。","别再重审”要不要走”这个决定。已经定了。","回头看，找理由掉头。"],
+"Six of Swords":["一个过渡正在进行，难的部分已经过去了。新地方还不激动人心——只是安静些。","别再重审“要不要走”这个决定。已经定了。","回头看，找理由掉头。"],
 "Seven of Swords":["有件事在绕道进行——你绕别人，或者别人绕你。含蓄没问题，自欺不行。","把那个你一直斜着问的问题，正面问出来。","以为自己能管住一件不肯命名的处境。"],
-"Eight of Cups":["你要离开的这样东西并不坏，只是对你而言已经完了。这是最难解释的一种离开，但它依然成立。","朝”离开”迈一个具体的步子，哪怕不告诉任何人。","因为”还没那么糟”而留下。"],
-"Nine of Cups":["你想要的，大体已经在这儿了，只是”想要”还没跟上。满足既是一种感受，也是一个决定。","说出那个已经实现的愿望，用陈述句，别加”还行吧”。","把满足感一直押到下一件事之后。"],
+"Eight of Cups":["你要离开的这样东西并不坏，只是对你而言已经完了。这是最难解释的一种离开，但它依然成立。","朝“离开”迈一个具体的步子，哪怕不告诉任何人。","因为“还没那么糟”而留下。"],
+"Nine of Cups":["你想要的，大体已经在这儿了，只是“想要”还没跟上。满足既是一种感受，也是一个决定。","说出那个已经实现的愿望，用陈述句，别加“还行吧”。","把满足感一直押到下一件事之后。"],
 "Ten of Cups":["你身上好的那部分是平常而耐用的，正因如此容易被忽略。家常的、不体面的，要算双倍。","做一件小事，让某个平常的晚上对别人好一点。","把最好的注意力留给陌生人。"],
 };
 
@@ -358,11 +382,11 @@ const LENS_EN = [
 "The World — you finish things. Your risk is starting the next one before you have stood in this one.",
 ];
 const LENS_ZH = [
-"愚者 —— 你在计划没成型时动得最好。你的风险不是莽撞，是等一个”准备好了”的感觉。",
+"愚者 —— 你在计划没成型时动得最好。你的风险不是莽撞，是等一个“准备好了”的感觉。",
 "魔术师 —— 你靠把现有的东西组装起来拿到想要的。你的风险是力气散着使。",
 "女祭司 —— 你在能讲清道理之前就知道。你的风险是用噪音把它压过去。",
 "皇后 —— 你靠照看把东西养大。你的风险是照顾一直朝外，从不朝内。",
-"皇帝 —— 结构让你稳。你的风险是把”控制”当成”稳定”。",
+"皇帝 —— 结构让你稳。你的风险是把“控制”当成“稳定”。",
 "教皇 —— 你信经过别人检验的东西。你的风险是继承了一条你早已长大的规矩。",
 "恋人 —— 你按自己忠于什么来做决定。你的风险是把价值问题当成偏好问题。",
 "战车 —— 你靠同时握住两样东西往前走。你的风险是有速度没方向。",
@@ -391,7 +415,7 @@ const T = {
   go:"Reveal today’s card", hint:"One card per day. It does not re-roll — come back tomorrow.",
   up:"upright", rev:"reversed",
   t1:"Today", t2:"If you do one thing", t3:"Watch for", t4:"Through your own card",
-  copy:"Copy as text", toast:"Copied",
+  copy:"Copy as text", save:"Save as image", toast:"Copied",
   lock:"Tomorrow this resolves to a different decan. Nothing here is randomised, and nothing was sent to a server.",
   dsum:"Show the derivation — exactly how this card was reached",
   dnote:"This is a designed system built on published correspondences (Golden Dawn <i>Book T</i> decan attributions and standard numerology reduction). It is not a random number generator, and it does not claim to predict anything.",
@@ -412,7 +436,7 @@ const T = {
   go:"看今日之牌", hint:"一天一牌，不能重抽 —— 明天再来。",
   up:"正位", rev:"逆位",
   t1:"今日", t2:"若只做一件事", t3:"留意", t4:"照你自己的本命牌",
-  copy:"复制为文字", toast:"已复制",
+  copy:"复制为文字", save:"存成图片", toast:"已复制",
   lock:"明天月亮会走到下一旬。这里没有任何随机数，也没有任何数据离开你的设备。",
   dsum:"展开推导 —— 这张牌是怎么算出来的",
   dnote:"这是一套建立在公开对应关系上的设计系统（黄金黎明《Book T》旬表归属、标准命数归约）。它不是随机数生成器，也不声称能预测任何事。",
@@ -517,6 +541,7 @@ function sigil(cardEn, decanIndex, planet, reversed){
 const $=id=>document.getElementById(id);
 const MONTHS_EN=["January","February","March","April","May","June","July",
                  "August","September","October","November","December"];
+let LAST=null;
 let LANG="en";
 try{ LANG=(localStorage.getItem("dd.lang"))||((navigator.language||"en").toLowerCase().startsWith("zh")?"zh":"en"); }catch(e){}
 
@@ -532,7 +557,8 @@ function paintChrome(){
   $("h1").innerHTML=t.title; $("sub").innerHTML=t.sub;
   $("lbl").textContent=t.lbl; $("go").textContent=t.go; $("hint").textContent=t.hint;
   $("t1").textContent=t.t1; $("t2").textContent=t.t2; $("t3").textContent=t.t3; $("t4").textContent=t.t4;
-  $("copy").textContent=t.copy; $("dsum").textContent=t.dsum; $("dnote").innerHTML=t.dnote;
+  $("copy").textContent=t.copy; $("save").textContent=t.save;
+  $("dsum").textContent=t.dsum; $("dnote").innerHTML=t.dnote;
   $("foot1").textContent=t.f1; $("foot2").textContent=t.f2;
   $("lzh").className = LANG==="zh" ? "on" : "";
   $("len").className = LANG==="en" ? "on" : "";
@@ -601,6 +627,10 @@ function reveal(){
   ];
   $("steps").innerHTML = steps.map(x=>`<li>${x}</li>`).join("");
 
+  LAST = {
+    up:up, card:(LANG==="zh"?zhName(dec.c):dec.c), cardEn:dec.c, decanNo:(di%3)+1,
+    sign:signName, planet:planet, suit:suitNm, elem:elem, phase:phaseNm, major:majorNm
+  };
   $("out").classList.add("on");
 }
 
@@ -628,7 +658,163 @@ $("lzh").addEventListener("click",()=>setLang("zh"));
 $("len").addEventListener("click",()=>setLang("en"));
 $("go").addEventListener("click",reveal);
 $("copy").addEventListener("click",copyText);
+$("save").addEventListener("click",shareImage);
 $("bd").addEventListener("change",reveal);
+
+/* ══════════════════ 五、分享图导出 · share as image ══════════════════ */
+
+// 把结果画成 1080×1350（4:5，手机与社交平台通用）
+function renderCardBlob(){
+  return new Promise(function(resolve,reject){
+    const W=1080, H=1350, PAD=84;
+    const cv=document.createElement("canvas"); cv.width=W; cv.height=H;
+    const g=cv.getContext("2d");
+    const t=T[LANG], L=LAST;
+    if(!L){ reject(new Error("nothing to draw")); return; }
+
+    const serif = LANG==="zh"
+      ? 'px "Songti SC","Noto Serif CJK SC",Georgia,serif'
+      : 'px Georgia,"Times New Roman",serif';
+    const sans = LANG==="zh"
+      ? 'px -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif'
+      : 'px -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+    const F=(tpl,px,wt)=>wt+" "+px+tpl;
+
+    // 底色 + 顶部金线
+    g.fillStyle="#0b0d1a"; g.fillRect(0,0,W,H);
+    const rg=g.createRadialGradient(W*0.30,-H*0.05,60,W*0.30,-H*0.05,H*0.92);
+    rg.addColorStop(0,"#232a58"); rg.addColorStop(1,"rgba(11,13,26,0)");
+    g.fillStyle=rg; g.fillRect(0,0,W,H);
+    g.fillStyle="#c8a24a"; g.fillRect(0,0,W,7);
+
+    // 牌面：直接复用生成器产出的 SVG
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 230" width="150" height="230">'
+            + $("sig").innerHTML + '</svg>';
+    const im=new Image();
+    im.onload=function(){
+      const cw=286, ch=Math.round(cw*230/150), cx=PAD, cy=158;
+      g.save();
+      if(!L.up){ g.translate(cx+cw/2, cy+ch/2); g.rotate(Math.PI); g.translate(-(cx+cw/2), -(cy+ch/2)); }
+      g.drawImage(im, cx, cy, cw, ch);
+      g.restore();
+
+      // 右侧：正逆位 / 牌名 / 属性
+      const tx=cx+cw+56;
+      g.fillStyle="#e8cd8a"; g.font=F(sans,29,"600");
+      g.textBaseline="alphabetic";
+      g.fillText(L.up?t.up.toUpperCase():t.rev.toUpperCase(), tx, cy+48);
+
+      g.fillStyle="#e9e7e0"; g.font=F(serif, LANG==="zh"?78:64, "600");
+      g.fillText(L.card, tx, cy+138);
+      if(LANG==="zh"){
+        g.fillStyle="#9aa0b8"; g.font=F(sans,25,"400");
+        g.fillText(L.cardEn, tx, cy+180);
+      }
+      g.fillStyle="#9aa0b8"; g.font=F(sans,26,"400");
+      const l1 = LANG==="zh"
+        ? L.sign+" · 第 "+L.decanNo+" 旬 · "+L.planet+" 守护"
+        : L.sign+" · decan "+L.decanNo+" · ruled by "+L.planet;
+      const l2 = LANG==="zh"
+        ? L.suit+" · "+L.elem+" · "+L.phase
+        : L.suit+" · "+L.elem+" · "+L.phase;
+      g.fillText(l1, tx, cy+(LANG==="zh"?232:220));
+      g.fillText(l2, tx, cy+(LANG==="zh"?270:258));
+
+      // 四段文字：先量后画，空间不够就整体缩字号，绝不让任何一段被丢掉
+      const blocks=[
+        [t.t1, $("r1").textContent],
+        [t.t2, $("r2").textContent],
+        [t.t3, $("r3").textContent],
+        [t.t4, $("r4").textContent]
+      ];
+      const y0=Math.max(cy+ch+84, 620), yEnd=H-124, maxW=W-PAD*2;
+      const measure=function(S){
+        let y=y0;
+        for(let i=0;i<blocks.length;i++){
+          const fs=Math.round((i===3?27:30)*S);
+          y+=Math.round(38*S);
+          g.font=F(sans, fs, "400");
+          y=wrapText(g, blocks[i][1], PAD, y, maxW, Math.round(fs*1.42), false)+Math.round(20*S);
+        }
+        return y-Math.round(20*S);
+      };
+      let S=1;
+      while(S>0.60 && measure(S)>yEnd) S-=0.04;
+
+      let y=y0;
+      for(let i=0;i<blocks.length;i++){
+        const fs=Math.round((i===3?27:30)*S), lh=Math.round(fs*1.42);
+        g.fillStyle="#c8a24a"; g.font=F(sans, Math.round(23*S), "700");
+        g.fillText(blocks[i][0], PAD, y); y+=Math.round(38*S);
+        g.fillStyle="#dcd8cc"; g.font=F(sans, fs, "400");
+        y=wrapText(g, blocks[i][1], PAD, y, maxW, lh, true)+Math.round(20*S);
+      }
+
+      // 页脚
+      g.fillStyle="#2a3050"; g.fillRect(PAD, H-104, W-PAD*2, 1);
+      g.fillStyle="#9aa0b8"; g.font=F(sans,22,"400");
+      g.fillText("sarah-veil.github.io/daily-decan", PAD, H-60);
+      g.textAlign="right"; g.fillText(todayISO(), W-PAD, H-60); g.textAlign="left";
+
+      cv.toBlob(function(b){ b?resolve(b):reject(new Error("toBlob failed")); }, "image/png");
+    };
+    im.onerror=function(){ reject(new Error("sigil svg failed")); };
+    im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+  });
+}
+
+// 中英分别按字符 / 按词换行
+function wrapText(g, text, x, y, maxW, lh, draw){
+  const paras=String(text||"").split("\n");
+  for(let p=0;p<paras.length;p++){
+    const units = LANG==="zh" ? paras[p].split("") : paras[p].split(" ");
+    let line="";
+    for(let i=0;i<units.length;i++){
+      const test = (LANG==="zh" || !line) ? line+units[i] : line+" "+units[i];
+      if(g.measureText(test).width > maxW && line){
+        if(draw!==false) g.fillText(line, x, y);
+        y+=lh; line = units[i];
+      } else { line=test; }
+    }
+    if(line){ if(draw!==false) g.fillText(line, x, y); y+=lh; }
+  }
+  return y;
+}
+
+async function shareImage(){
+  const t=T[LANG];
+  let blob;
+  try{ blob=await renderCardBlob(); }
+  catch(e){ toast("✗ "+e.message); return; }
+  const name="daily-decan-"+todayISO()+".png";
+
+  // 触屏设备优先弹系统分享面板；桌面端一律直接下载，
+  // 避免 canShare 为真但 share() 迟迟不落地、用户以为按钮坏了
+  const touch = window.matchMedia && window.matchMedia("(pointer:coarse)").matches;
+  if(touch && navigator.canShare){
+    try{
+      const file=new File([blob], name, {type:"image/png"});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({ files:[file], title:"The Daily Decan · 每日旬星" });
+        return;
+      }
+    }catch(err){ if(err && err.name==="AbortError") return; }
+  }
+
+  // 桌面回退：直接下载
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+  toast(t.toast);
+}
+
+/* ══════════════════ 六、PWA 离线可用 ══════════════════ */
+if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){ /* 缓存失败不影响使用 */ });
+  });
+}
 
 paintChrome();
 try{ const s=localStorage.getItem("dd.bd"); if(s){ $("bd").value=s; reveal(); } }catch(e){}
