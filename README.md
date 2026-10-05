@@ -6,7 +6,7 @@ Most "daily card" apps roll a random number and dress it up. This one doesn't. Y
 today is the card of the **decan the Moon is actually standing in** — and every step of that
 calculation is printed on the page, in plain sight.
 
-Live: `https://<your-user>.github.io/daily-decan/` · Single file · No build step · MIT
+**Live: [sarah-veil.github.io/daily-decan](https://sarah-veil.github.io/daily-decan/)** · Single file · No build step · MIT
 
 ![The Daily Decan](screenshot.png)
 
@@ -48,6 +48,8 @@ ship the same images.
 **The readings refuse to flatter.** There is no "you are a caring person who sometimes doubts
 themselves". Each card gives one plain observation, one concrete action, and one thing to watch
 for. If a line could apply to anybody, it does not belong here.
+
+**It speaks two languages.** The whole app is bilingual (English and Chinese). It opens in whichever language your browser asks for, with a toggle in the corner. The Chinese readings are written as Chinese rather than translated from the English — the cadence matters.
 
 **Nothing leaves your device.** No account, no cookies, no analytics, no server, no network call.
 The whole thing is one HTML file. You can run it from `file://` with the wifi off.
