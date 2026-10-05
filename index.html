@@ -456,6 +456,7 @@ const T = {
   f1:"No account. No cookies. No server. Everything above is computed in your browser.",
   f2:"Source on GitHub",
   f3:"Tell me what landed and what didn't",
+  f3gh:"Feedback on GitHub (needs an account)",
   decan:"decan", ruledby:"ruled by", moonin:"Moon in", yourarcana:"your arcana, from",
   s1:"Today is", s1b:"— one draw per day; there is no re-roll.",
   s2:"Julian day", s2b:", computed locally.",
@@ -491,6 +492,7 @@ const T = {
   f1:"无账号 · 无 cookie · 无服务器 · 以上全部在你的浏览器里计算",
   f2:"源码在 GitHub",
   f3:"哪句说到你了，哪句没有",
+  f3gh:"在 GitHub 上提意见（需要账号）",
   decan:"第", ruledby:"守护", moonin:"月亮在", yourarcana:"本命大牌，取自",
   s1:"今天是", s1b:"—— 一天一次，不能重抽。",
   s2:"儒略日", s2b:"，本地计算。",
@@ -598,6 +600,13 @@ function sigil(cardEn, decanIndex, planet, reversed){
 const $=id=>document.getElementById(id);
 const MONTHS_EN=["January","February","March","April","May","June","July",
                  "August","September","October","November","December"];
+// ── 反馈入口 ─────────────────────────────────────────────────────────
+// 访客大多是微信/小红书上的人，不会为提一句意见去注册 GitHub 账号。
+// 把不需要登录的问卷链接（腾讯问卷/金数据等）填在这里，页脚会自动改用它；
+// 留空则退回 GitHub issue 表单 —— 但那只对开发者可用，别当成通用入口。
+const FEEDBACK_URL = "";
+const FEEDBACK_GH  = "https://github.com/sarah-veil/daily-decan/issues/new?template=feedback.yml";
+
 let LAST=null;
 let LANG="en";
 try{ LANG=(localStorage.getItem("dd.lang"))||((navigator.language||"en").toLowerCase().startsWith("zh")?"zh":"en"); }catch(e){}
@@ -645,7 +654,9 @@ function paintChrome(){
   $("t1").textContent=t.t1; $("t2").textContent=t.t2; $("t3").textContent=t.t3; $("t4").textContent=t.t4;
   $("copy").textContent=t.copy; $("save").textContent=t.save;
   $("dsum").textContent=t.dsum; $("dnote").innerHTML=t.dnote;
-  $("foot1").textContent=t.f1; $("foot2").textContent=t.f2; $("foot3").textContent=t.f3;
+  $("foot1").textContent=t.f1; $("foot2").textContent=t.f2;
+  $("foot3").href = FEEDBACK_URL || FEEDBACK_GH;
+  $("foot3").textContent = FEEDBACK_URL ? t.f3 : t.f3gh;
   $("lzh").className = LANG==="zh" ? "on" : "";
   $("len").className = LANG==="en" ? "on" : "";
   document.documentElement.lang = LANG==="zh" ? "zh-CN" : "en";
