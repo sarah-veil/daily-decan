@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每日旬星 · The Daily Decan</title>
+<meta name="description" content="一天一张牌，由月亮此刻所在的旬位推出，不是随机抽取。七步推导全部摊开。中英双语。无账号、无追踪、纯本地计算。">
+<meta name="theme-color" content="#0e1020">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='none' stroke='%23c8a24a' stroke-width='2'/><circle cx='16' cy='16' r='4' fill='%23c8a24a'/></svg>">
+<style>
+  :root{
+    --ink:#0e1020; --ink2:#161a2f; --line:#2a3050;
+    --gold:#c8a24a; --gold2:#e8cd8a;
+    --txt:#e9e7e0; --dim:#9aa0b8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 700px at 50% -10%, #1c2145 0%, transparent 60%),
+      radial-gradient(900px 600px at 85% 110%, #1a1630 0%, transparent 55%),
+      var(--ink);
+    color:var(--txt);
+    font:16px/1.7 ui-sans-serif,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:28px 20px 72px}
+  header{text-align:center;margin:10px 0 26px;position:relative}
+  .lang{position:absolute;right:0;top:0;display:flex;gap:6px}
+  .lang button{
+    background:none;border:1px solid var(--line);color:var(--dim);
+    border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer;font-family:inherit;
+  }
+  .lang button.on{color:#20180a;background:linear-gradient(180deg,var(--gold2),var(--gold));border-color:transparent;font-weight:600}
+  .mark{width:52px;height:52px;margin:6px auto 12px;display:block}
+  h1{font:600 26px/1.3 ui-serif,Georgia,"Songti SC","Noto Serif CJK SC",serif;letter-spacing:.4px;margin:0 0 8px}
+  h1 em{font-style:normal;color:var(--gold2)}
+  h1 .en{display:block;font-size:14px;letter-spacing:2.4px;color:var(--dim);text-transform:uppercase;margin-top:6px;font-weight:400}
+  .sub{color:var(--dim);font-size:14.5px;max-width:48ch;margin:0 auto}
+  .panel{
+    background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+    border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0;
+  }
+  label{display:block;font-size:13px;color:var(--dim);margin-bottom:8px}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  input[type=date]{
+    flex:1 1 200px;background:var(--ink2);border:1px solid var(--line);color:var(--txt);
+    border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;
+  }
+  input[type=date]:focus{outline:2px solid var(--gold);outline-offset:1px}
+  button.act{
+    background:linear-gradient(180deg,var(--gold2),var(--gold));color:#20180a;border:0;
+    border-radius:10px;padding:11px 18px;font:600 14.5px/1 inherit;cursor:pointer;font-family:inherit;
+  }
+  button.ghost{background:none;border:1px solid var(--line);color:var(--txt);border-radius:10px;
+    padding:10px 16px;font:500 14px/1 inherit;cursor:pointer;font-family:inherit}
+  button:active{transform:translateY(1px)}
+  .hint{font-size:12.5px;color:var(--dim);margin-top:9px}
+  #out{display:none}
+  #out.on{display:block;animation:fade .5s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .cardwrap{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .sigil{width:150px;height:230px;flex:0 0 auto;border-radius:10px;
+         border:1px solid var(--line);background:rgba(0,0,0,.25)}
+  .sigil.rev{transform:rotate(180deg)}
+  .meta{min-width:210px}
+  .cardname{font:600 25px/1.3 ui-serif,Georgia,"Songti SC","Noto Serif CJK SC",serif;margin:2px 0 4px}
+  .cardname small{display:block;font-size:13px;color:var(--dim);letter-spacing:1px;font-weight:400;margin-top:4px}
+  .pos{display:inline-block;font-size:12px;letter-spacing:1.4px;color:var(--gold2);
+       border:1px solid var(--line);border-radius:999px;padding:3px 11px;margin-bottom:10px}
+  .pos.rev{color:#e0a0a0}
+  .attr{font-size:13.5px;color:var(--dim);line-height:1.9}
+  .attr b{color:var(--txt);font-weight:600}
+  .read h3{font:600 12.5px/1 ui-serif,Georgia,"Songti SC",serif;color:var(--gold2);
+           letter-spacing:.6px;margin:20px 0 8px}
+  .read p{margin:0 0 6px}
+  .read .lens{border-left:2px solid var(--gold);padding-left:14px;color:#dcd8cc}
+  details{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
+  summary{cursor:pointer;color:var(--gold2);font-size:14px;font-weight:600;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary:before{content:"▸ ";}
+  details[open] summary:before{content:"▾ ";}
+  .steps{margin:14px 0 0;padding:0;list-style:none;font-size:14px}
+  .steps li{padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.07);color:#d6d3c9}
+  .steps li:last-child{border:0}
+  .steps code{background:rgba(255,255,255,.06);border-radius:5px;padding:1px 6px;
+              font:13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--gold2)}
+  .note{font-size:12.5px;color:var(--dim);margin-top:12px}
+  footer{text-align:center;color:var(--dim);font-size:12.5px;margin-top:40px;line-height:2}
+  footer a{color:var(--dim)}
+  .lock{text-align:center;color:var(--dim);font-size:12.5px;margin-top:16px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+         background:var(--gold);color:#20180a;font-weight:600;font-size:14px;
+         padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.28s;z-index:99}
+  .toast.on{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="lang">
+      <button id="lzh">中文</button><button id="len">EN</button>
+    </div>
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="32" r="26" fill="none" stroke="#c8a24a" stroke-width="1.2" opacity=".55"/>
+      <circle cx="32" cy="32" r="19" fill="none" stroke="#c8a24a" stroke-width="1" opacity=".35"/>
+      <path d="M32 6 A26 26 0 0 1 32 58 Z" fill="#c8a24a" opacity=".18"/>
+      <circle cx="32" cy="32" r="5.5" fill="#e8cd8a"/>
+    </svg>
+    <h1 id="h1"></h1>
+    <p class="sub" id="sub"></p>
+  </header>
+
+  <div class="panel">
+    <label for="bd" id="lbl"></label>
+    <div class="row">
+      <input type="date" id="bd" min="1900-01-01" max="2100-12-31">
+      <button class="act" id="go"></button>
+    </div>
+    <p class="hint" id="hint"></p>
+  </div>
+
+  <section id="out" aria-live="polite">
+    <div class="panel">
+      <div class="cardwrap">
+        <svg class="sigil" id="sig" viewBox="0 0 150 230" aria-hidden="true"></svg>
+        <div class="meta">
+          <div class="pos" id="pos">—</div>
+          <div class="cardname" id="cname">—</div>
+          <div class="attr" id="cattr"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel read">
+      <h3 id="t1"></h3><p id="r1"></p>
+      <h3 id="t2"></h3><p id="r2"></p>
+      <h3 id="t3"></h3><p id="r3"></p>
+      <h3 id="t4"></h3><p class="lens" id="r4"></p>
+      <div class="row" style="margin-top:18px"><button class="ghost" id="copy"></button></div>
+      <p class="lock" id="lock"></p>
+    </div>
+
+    <div class="panel">
+      <details>
+        <summary id="dsum"></summary>
+        <ul class="steps" id="steps"></ul>
+        <p class="note" id="dnote"></p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <span id="foot1"></span><br>
+    <a href="https://github.com/" id="foot2"></a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+window.addEventListener("error", function(e){
+  var d=document.createElement("pre");
+  d.style.cssText="position:fixed;left:0;right:0;bottom:0;margin:0;background:#4a1414;color:#ffe;"
+    +"padding:10px 14px;font:12px/1.5 ui-monospace,Menlo,monospace;z-index:99;white-space:pre-wrap";
+  d.textContent="JS ERROR: "+(e.message||"?")+"  @line "+(e.lineno||"?");
+  document.body.appendChild(d);
+}, true);
+
+/* ══════════════════ 一、系统数据 · the system ══════════════════ */
+
+// 黄金黎明《Book T》旬表：黄道 12 宫 × 3 旬（每旬 10°），共 36 旬。
+const DECANS = [
+  {s:"Aries",       c:"Two of Wands",      p:"Mars"},
+  {s:"Aries",       c:"Three of Wands",    p:"Sun"},
+  {s:"Aries",       c:"Four of Wands",     p:"Venus"},
+  {s:"Taurus",      c:"Five of Pentacles", p:"Mercury"},
+  {s:"Taurus",      c:"Six of Pentacles",  p:"Moon"},
+  {s:"Taurus",      c:"Seven of Pentacles",p:"Saturn"},
+  {s:"Gemini",      c:"Eight of Swords",   p:"Jupiter"},
+  {s:"Gemini",      c:"Nine of Swords",    p:"Mars"},
+  {s:"Gemini",      c:"Ten of Swords",     p:"Sun"},
+  {s:"Cancer",      c:"Two of Cups",       p:"Venus"},
+  {s:"Cancer",      c:"Three of Cups",     p:"Mercury"},
+  {s:"Cancer",      c:"Four of Cups",      p:"Moon"},
+  {s:"Leo",         c:"Five of Wands",     p:"Saturn"},
+  {s:"Leo",         c:"Six of Wands",      p:"Jupiter"},
+  {s:"Leo",         c:"Seven of Wands",    p:"Mars"},
+  {s:"Virgo",       c:"Eight of Pentacles",p:"Sun"},
+  {s:"Virgo",       c:"Nine of Pentacles", p:"Venus"},
+  {s:"Virgo",       c:"Ten of Pentacles",  p:"Mercury"},
+  {s:"Libra",       c:"Two of Swords",     p:"Moon"},
+  {s:"Libra",       c:"Three of Swords",   p:"Saturn"},
+  {s:"Libra",       c:"Four of Swords",    p:"Jupiter"},
+  {s:"Scorpio",     c:"Five of Cups",      p:"Mars"},
+  {s:"Scorpio",     c:"Six of Cups",       p:"Sun"},
+  {s:"Scorpio",     c:"Seven of Cups",     p:"Venus"},
+  {s:"Sagittarius", c:"Eight of Wands",    p:"Mercury"},
+  {s:"Sagittarius", c:"Nine of Wands",     p:"Moon"},
+  {s:"Sagittarius", c:"Ten of Wands",      p:"Saturn"},
+  {s:"Capricorn",   c:"Two of Pentacles",  p:"Jupiter"},
+  {s:"Capricorn",   c:"Three of Pentacles",p:"Mars"},
+  {s:"Capricorn",   c:"Four of Pentacles", p:"Sun"},
+  {s:"Aquarius",    c:"Five of Swords",    p:"Venus"},
+  {s:"Aquarius",    c:"Six of Swords",     p:"Mercury"},
+  {s:"Aquarius",    c:"Seven of Swords",   p:"Moon"},
+  {s:"Pisces",      c:"Eight of Cups",     p:"Saturn"},
+  {s:"Pisces",      c:"Nine of Cups",      p:"Jupiter"},
+  {s:"Pisces",      c:"Ten of Cups",       p:"Mars"},
+];
+
+const CARD_ZH = {
+"Two of Wands":"权杖二","Three of Wands":"权杖三","Four of Wands":"权杖四",
+"Five of Wands":"权杖五","Six of Wands":"权杖六","Seven of Wands":"权杖七",
+"Eight of Wands":"权杖八","Nine of Wands":"权杖九","Ten of Wands":"权杖十",
+"Two of Cups":"圣杯二","Three of Cups":"圣杯三","Four of Cups":"圣杯四",
+"Five of Cups":"圣杯五","Six of Cups":"圣杯六","Seven of Cups":"圣杯七",
+"Eight of Cups":"圣杯八","Nine of Cups":"圣杯九","Ten of Cups":"圣杯十",
+"Two of Swords":"宝剑二","Three of Swords":"宝剑三","Four of Swords":"宝剑四",
+"Five of Swords":"宝剑五","Six of Swords":"宝剑六","Seven of Swords":"宝剑七",
+"Eight of Swords":"宝剑八","Nine of Swords":"宝剑九","Ten of Swords":"宝剑十",
+"Two of Pentacles":"星币二","Three of Pentacles":"星币三","Four of Pentacles":"星币四",
+"Five of Pentacles":"星币五","Six of Pentacles":"星币六","Seven of Pentacles":"星币七",
+"Eight of Pentacles":"星币八","Nine of Pentacles":"星币九","Ten of Pentacles":"星币十",
+};
+const CARD_EN = {};
+Object.keys(CARD_ZH).forEach(k=>{ CARD_EN[CARD_ZH[k]]=k; });
+
+const SUIT_ZH   = {Wands:"权杖", Cups:"圣杯", Swords:"宝剑", Pentacles:"星币"};
+const ELEMENT   = {Wands:"Fire", Cups:"Water", Swords:"Air", Pentacles:"Earth"};
+const ELEM_ZH   = {Fire:"火", Water:"水", Air:"风", Earth:"土"};
+const SIGN_ZH   = ["白羊","金牛","双子","巨蟹","狮子","处女","天秤","天蝎","射手","摩羯","水瓶","双鱼"];
+const PLANET_ZH = {Sun:"太阳",Moon:"月亮",Mercury:"水星",Venus:"金星",Mars:"火星",Jupiter:"木星",Saturn:"土星"};
+const PHASE_ZH  = ["新月","蛾眉月","上弦月","盈凸月","满月","亏凸月","下弦月","残月"];
+const PHASE_EN  = ["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous",
+                   "Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
+
+const MAJOR_EN = ["The Fool","The Magician","The High Priestess","The Empress","The Emperor",
+  "The Hierophant","The Lovers","The Chariot","Strength","The Hermit","Wheel of Fortune",
+  "Justice","The Hanged Man","Death","Temperance","The Devil","The Tower","The Star",
+  "The Moon","The Sun","Judgement","The World"];
+const MAJOR_ZH = ["愚者","魔术师","女祭司","皇后","皇帝","教皇","恋人","战车","力量","隐者",
+  "命运之轮","正义","倒吊人","死神","节制","恶魔","高塔","星星","月亮","太阳","审判","世界"];
+const MAJOR_L  = ["Aleph","Beth","Gimel","Daleth","Heh","Vav","Zayin","Cheth","Teth","Yod",
+  "Kaph","Lamed","Mem","Nun","Samekh","Ayin","Peh","Tzaddi","Qoph","Resh","Shin","Tav"];
+const MAJOR_X  = ["Air","Mercury","The Moon","Venus","Aries","Taurus","Gemini","Cancer","Leo",
+  "Virgo","Jupiter","Libra","Water","Scorpio","Sagittarius","Capricorn","Mars","Aquarius",
+  "Pisces","The Sun","Fire","Saturn"];
+const CORR_ZH  = {"Air":"风","Water":"水","Fire":"火","Mercury":"水星","Venus":"金星",
+  "Aries":"白羊","Taurus":"金牛","Gemini":"双子","Cancer":"巨蟹","Leo":"狮子","Virgo":"处女",
+  "Jupiter":"木星","Libra":"天秤","Scorpio":"天蝎","Sagittarius":"射手","Capricorn":"摩羯",
+  "Mars":"火星","Aquarius":"水瓶","Pisces":"双鱼","Saturn":"土星","The Moon":"月亮","The Sun":"太阳"};
+
+/* ── 36 条旬牌解读（英文）── */
+const R_EN = {
+"Two of Wands":["A decision you have already made is still being treated as optional. The waiting is now the risk, not the choice.","Name the thing you are waiting for, out loud. If you cannot name it, you are not waiting — you are avoiding.","The urge to gather one more opinion before you move."],
+"Three of Wands":["Something you sent out earlier is still in transit. Your job today is patience with visible effort, not new departures.","Do one small thing that only makes sense if the plan succeeds.","Impatience dressed up as diligence."],
+"Four of Wands":["A threshold worth marking. Progress that feels unglamorous is still progress, and it is finished enough to acknowledge.","Tell one person about something you completed. Out loud, without downgrading it.","Skipping the acknowledgement and going straight to the next thing."],
+"Five of Pentacles":["A lack that is real but narrower than it feels. The cold part is usually the isolation, not the shortage.","Ask for one specific thing from one specific person. Not for help in general.","Mistaking a bad week for a permanent condition."],
+"Six of Pentacles":["Giving and receiving are out of balance somewhere, and you already know where. Generosity with strings is not generosity.","Give something with no follow-up attached — or accept something without immediately repaying it.","Keeping score in a relationship that is not a transaction."],
+"Seven of Pentacles":["You are between planting and harvest, which is the least interesting and most decisive stretch. Nothing is wrong; it is just unfinished.","Look at what you have actually grown so far instead of what is still missing.","Pulling something up to check whether it is growing."],
+"Eight of Swords":["The constraint is tighter in your description of it than in the situation itself. You have options you are not counting.","Write down three moves you believe are unavailable. Then check whether any of them is actually blocked.","Explaining the trap in more detail instead of testing it."],
+"Nine of Swords":["A worry has been running at night on very little evidence. The dread is real; the forecast is probably not.","Say the worst-case scenario out loud to someone. It shrinks when spoken.","Rehearsing a conversation you have not had."],
+"Ten of Swords":["Something is finished, and the finishing is the mercy. Do not try to revive it into a better version of itself.","Close one thing properly — a thread, a tab, a hope — so it stops taking rent.","Negotiating with an ending that has already happened."],
+"Two of Cups":["A connection is available and mutual, and it is being under-used. Warmth left unexpressed reads as indifference.","Say the warm thing plainly, without a joke as a shield.","Assuming the other person already knows."],
+"Three of Cups":["The good is social this time. Something you have been carrying alone gets lighter in company.","Reach out to someone you have been meaning to see for months. Put a date on it.","Turning down the invitation out of habit."],
+"Four of Cups":["You are being offered something and looking past it for something more interesting. Boredom is not the same as absence.","Take one thing you have been dismissing seriously for an hour. See if it holds.","Contempt for what is actually on the table."],
+"Five of Wands":["Friction without a real disagreement. Everyone is competing for room rather than for a different outcome.","Ask what the other person actually wants. It is often not what you assumed you were fighting about.","Winning a point nobody was contesting."],
+"Six of Wands":["Recognition arrives, and your instinct is to deflect it. Deflection is a way of staying small on purpose.","Accept a compliment with two words and stop. Do not hand it back.","Explaining why the good result was luck."],
+"Seven of Wands":["You are defending a position from higher ground. That is a strong place to be, and it is also exhausting.","Decide which of the objections actually deserve an answer. Ignore the rest on purpose.","Defending the whole hill when only one gate matters."],
+"Eight of Pentacles":["The unglamorous repetition is where the skill is being built. Boredom here is the price of competence.","Do one repetition slowly and check it, instead of five quickly.","Looking for a shortcut that skips the reps."],
+"Nine of Pentacles":["Self-sufficiency is working, and it has quietly become a wall. Independence is not the same as isolation.","Enjoy something you built alone — then invite someone into it, even briefly.","Confusing not needing anyone with not wanting anyone."],
+"Ten of Pentacles":["The long horizon is the point right now. Small decisions today are really decisions about what lasts.","Do one thing that only pays off in a year.","Optimising for this week at the cost of the decade."],
+"Two of Swords":["A choice is being held at arm's length deliberately, and the arm is getting tired. Not deciding is itself a decision with costs.","Set a date by which you will decide. Write it down.","Gathering more information as a way of postponing."],
+"Three of Swords":["A hurt is specific and worth naming rather than working around. Clarity here hurts less than the vagueness does.","Say what actually happened, in plain words, to one person.","Being noble about it instead of accurate."],
+"Four of Swords":["Rest is the productive move today, not the reward for finishing. Recovery is part of the work, not a break from it.","Cancel one thing. Not everything — one.","Pushing through and calling it discipline."],
+"Five of Cups":["Attention is fixed on what is gone and is missing what is still standing. Grief is allowed; accounting is also allowed.","Name one thing you still have that you would have begged for a year ago.","Letting the loss set the frame for everything else."],
+"Six of Cups":["Something from earlier is relevant again — not as nostalgia but as an unfinished piece of who you are.","Write to or about someone from a long time ago, without sending it.","Romanticising a past you would not actually return to."],
+"Seven of Cups":["Too many options, most of them pleasant and none of them tested. The imagination is doing the work that reality should be doing.","Pick one option and take the smallest real step toward it today.","Falling for the version of the plan that cannot fail."],
+"Eight of Wands":["Things speed up and the message is already in the air. Delay now is not caution, it is friction.","Send the thing you have been drafting. It is finished enough.","Re-editing something that only needs sending."],
+"Nine of Wands":["You are tired and nearer the end than you feel. Guarding the last stretch is right; re-fighting old ground is not.","Do the next necessary thing only. Not the whole remainder.","Treating exhaustion as evidence that you are wrong."],
+"Ten of Wands":["You are carrying more than your share because you never put any of it down formally. Overload by accumulation, not by crisis.","Hand back one responsibility today, explicitly, to a named person.","Being the only one who knows how heavy it is."],
+"Two of Pentacles":["Juggling is a skill, and it is not a permanent arrangement. Something has to leave the rotation.","Choose the one ball you will let drop, and let it drop on purpose.","Pride in coping rather than fixing the load."],
+"Three of Pentacles":["The work is better with a second pair of eyes, and asking costs less than you think. Craft is collaborative before it is solitary.","Show an unfinished thing to someone whose judgement you respect.","Protecting the draft from feedback it needs."],
+"Four of Pentacles":["Holding on is costing more than the thing is worth. Security kept too tightly stops being security.","Spend something — money, time, or a position — deliberately, on purpose.","Confusing control with safety."],
+"Five of Swords":["A win is available that you should probably decline. Being right and being alone arrive together more often than people expect.","Let one argument go without conceding the underlying point.","Taking the victory that costs the relationship."],
+"Six of Swords":["A transition is underway and the hard part is behind you. The new place is not exciting yet — it is just calmer.","Stop re-litigating the decision to leave. It is made.","Looking back for reasons to turn around."],
+"Seven of Swords":["Something is being done sideways — by you or to you. Subtlety is fine; self-deception is not.","Ask directly the question you have been approaching at an angle.","Assuming you can manage a situation you will not name."],
+"Eight of Cups":["You are leaving something that is not bad, only finished for you. That is the hardest kind of exit to justify, and it is still valid.","Take one concrete step toward the leaving, even if you tell no one.","Staying because it is not terrible."],
+"Nine of Cups":["What you wanted is largely here, and the wanting has not caught up. Satisfaction is a decision as much as a feeling.","Name the wish that came true. Say it as a fact, not a hedge.","Postponing contentment until the next thing."],
+"Ten of Cups":["The good in your life is ordinary and durable, which is why it is easy to overlook. Domestic and unglamorous counts double.","Do one small thing that makes an ordinary evening better for someone else.","Saving your best attention for strangers."],
+};
+
+/* ── 36 条旬牌解读（中文，按中文语感重写，不是翻译）── */
+const R_ZH = {
+"Two of Wands":["该做的决定其实已经做了，只是你还把它当成”可选项”。现在真正的风险不是选错，是继续等。","把你在等的那件事说出口。说不出来，就不是在等，是在躲。","临门之前再找一个人确认一下。"],
+"Three of Wands":["之前发出去的东西还在路上。今天该做的是带着动作地等，不是再开一摊。","做一件只有”这事成了”才说得通的小事。","把着急打扮成勤快。"],
+"Four of Wands":["有个坎值得标记一下。不体面的进度也是进度，而且已经够完整，可以认了。","把一件做完的事讲给一个人听。别顺口贬低它。","跳过”认账”这一步，直接扑向下一件。"],
+"Five of Pentacles":["缺是缺，但比你感觉的窄。真正冷的那部分通常是被孤立，不是不够。","向一个具体的人要一样具体的东西。不要泛泛地”求帮忙”。","把倒霉的一周当成永久状态。"],
+"Six of Pentacles":["给和收在某处失了衡，而且你清楚是哪处。带条件的慷慨不算慷慨。","给一样东西，不附带后续；或者收下一样东西，不马上还回去。","在一段不是交易的关系里记账。"],
+"Seven of Pentacles":["你在播种和收获之间，这段最没意思也最要紧。没出问题，只是还没完。","看看你已经种出了什么，而不是还缺什么。","把东西拔起来看它长没长。"],
+"Eight of Swords":["困住你的，更多是”你对处境的描述”，而不是处境本身。你有没数进去的选项。","写下三个你认为”不可能”的做法，然后逐个查：是真的堵死了吗。","把陷阱描述得更细致，而不是伸手试一下。"],
+"Nine of Swords":["有件担忧半夜一直在跑，而证据很少。难受是真的，那个预测大概是假的。","把最坏的情况说给一个人听。说出来它就缩水。","反复排练一场还没发生的对话。"],
+"Ten of Swords":["有件事已经结束了，结束本身是解脱。别试图把它救成另一个更好的版本。","把一样东西正式收尾——一根线、一个标签页、一个念想——让它别再收租。","跟一个已经发生过的结局讨价还价。"],
+"Two of Cups":["一段关系是通的、是双向的，只是被晾着没用。不说出口的暖意，对方读成冷淡。","把那句暖的话平实地说了，别拿玩笑当挡箭牌。","默认对方”应该知道”。"],
+"Three of Cups":["今天的好在人身上。你一个人扛着的那件事，进了人群会轻一些。","联系那个你想见好几个月的人，把日子定下来。","习惯性地推掉邀约。"],
+"Four of Cups":["有东西递到你面前，你在越过它看别的更有意思的。无聊和”没有”是两回事。","把你一直瞧不上的那件事认真对待一个小时，看它站不站得住。","对桌上现有的东西表示轻蔑。"],
+"Five of Wands":["摩擦不小，但并没有真正的分歧。大家是在抢位置，不是在争一个不同的结果。","问问对方到底要什么。往往不是你设想的那个争点。","赢下一个根本没人在争的点。"],
+"Six of Wands":["认可来了，你的第一反应是推开。推开是有意把自己缩小。","别人夸你，回两个字，就此打住。别把话递回去。","解释这个好结果是运气。"],
+"Seven of Wands":["你在高地上守着一个位置。这是好地方，也很耗人。","挑出哪几条反对意见值得回答，其余的故意不理。","守整座山，其实只有一个门要紧。"],
+"Eight of Pentacles":["本事就是在这些不好看的重复里长出来的。这里的枯燥，是熟练的价钱。","一次慢慢做、回头检查，好过五次图快。","想找一条跳过重复的捷径。"],
+"Nine of Pentacles":["自给自足跑通了，却悄悄变成了一堵墙。独立和孤立不是一回事。","享受一样你自己挣来的东西——然后请一个人进来，哪怕一会儿。","把”不需要人”和”不想要人”混为一谈。"],
+"Ten of Pentacles":["现在要紧的是长线。今天的小决定，其实是在决定什么能留下来。","做一件一年后才见效的事。","为了这一周，牺牲这十年。"],
+"Two of Swords":["有个选择被你刻意举在臂展之外，胳膊快撑不住了。不决定，本身也是有代价的决定。","给自己定一个必须决定的期限，写下来。","用”再收集点信息”来拖延。"],
+"Three of Swords":["有个伤是具体的，值得说清楚，而不是绕开走。这里的清楚，比含糊更不疼。","把实际发生的事，用平实的话讲给一个人听。","对这件事表现得很高尚，而不是很准确。"],
+"Four of Swords":["今天休息是正事，不是干完活的奖赏。恢复是工作的一部分，不是它的中断。","取消一件事。不是全部——一件。","硬扛，并把它叫做自律。"],
+"Five of Cups":["注意力钉在失去的东西上，看不见还站着的那些。难过是允许的，算账也是允许的。","说出一样你还有的、而一年前的你会求之不得的东西。","让这一处失去，给所有事定调。"],
+"Six of Cups":["早年的某样东西又有了关联——不是怀旧，是你身上还没做完的一块。","给很久以前的某个人写点什么，不必发出去。","美化一个你其实并不想回去的过去。"],
+"Seven of Cups":["选择太多，大多好看，且一个都没验过。想象在做现实该做的事。","挑一个，今天就迈最小的一步。","被那个”不可能失败”的版本迷住。"],
+"Eight of Wands":["事情快起来了，消息其实已经在路上。这时候的拖延不是谨慎，是摩擦。","把你在改的那封东西发出去。已经够完整了。","反复修订一件只需要寄出的东西。"],
+"Nine of Wands":["你累了，但比你以为的更接近终点。守好最后一程是对的，重打旧仗不是。","只做下一件必须做的事，不是把剩下的全做完。","把疲惫当成”我错了”的证据。"],
+"Ten of Wands":["你多扛了一份，因为你从没正式放下过任何一份。是累积造成的过载，不是危机。","今天把一项责任明确交还给一个指名的人。","当那个唯一知道它有多重的人。"],
+"Two of Pentacles":["杂耍是本事，但不是长久之计。有一样东西必须离开这个循环。","挑出你要放手的那一个，并且故意让它掉下去。","以”我能扛”为荣，而不是去修那个担子。"],
+"Three of Pentacles":["这活多一双眼睛会更好，而开口的代价比你以为的小。手艺在成为独门之前，先是协作。","把一件没做完的东西给一个你信得过眼光的人看。","把稿子保护起来，不让它拿到该拿的反馈。"],
+"Four of Pentacles":["攥着的成本已经高过那东西本身。握得太紧的安全感，不再是安全感。","有意识地花掉一样东西——钱、时间，或者一个位置。","把控制当成安全。"],
+"Five of Swords":["有一场赢，你可能该让掉。既对又孤单，这两件事同时到的次数比人想的多。","放过一场争论，但不必让掉背后的那个点。","拿走那个要拿关系来换的胜利。"],
+"Six of Swords":["一个过渡正在进行，难的部分已经过去了。新地方还不激动人心——只是安静些。","别再重审”要不要走”这个决定。已经定了。","回头看，找理由掉头。"],
+"Seven of Swords":["有件事在绕道进行——你绕别人，或者别人绕你。含蓄没问题，自欺不行。","把那个你一直斜着问的问题，正面问出来。","以为自己能管住一件不肯命名的处境。"],
+"Eight of Cups":["你要离开的这样东西并不坏，只是对你而言已经完了。这是最难解释的一种离开，但它依然成立。","朝”离开”迈一个具体的步子，哪怕不告诉任何人。","因为”还没那么糟”而留下。"],
+"Nine of Cups":["你想要的，大体已经在这儿了，只是”想要”还没跟上。满足既是一种感受，也是一个决定。","说出那个已经实现的愿望，用陈述句，别加”还行吧”。","把满足感一直押到下一件事之后。"],
+"Ten of Cups":["你身上好的那部分是平常而耐用的，正因如此容易被忽略。家常的、不体面的，要算双倍。","做一件小事，让某个平常的晚上对别人好一点。","把最好的注意力留给陌生人。"],
+};
+
+/* ── 22 张本命牌（透镜）── */
+const LENS_EN = [
+"The Fool — you move best before the plan is complete. Your risk is not recklessness; it is waiting to feel ready.",
+"The Magician — you get what you want by assembling what already exists. Your risk is scattered force.",
+"The High Priestess — you know things before you can justify them. Your risk is overriding that with noise.",
+"The Empress — you grow things by attending to them. Your risk is giving care outward and never inward.",
+"The Emperor — you are steadied by structure. Your risk is mistaking control for stability.",
+"The Hierophant — you trust what has been tested by others. Your risk is inheriting a rule you have outgrown.",
+"The Lovers — you decide by what you are loyal to. Your risk is treating a values question as a preference.",
+"The Chariot — you move by holding two things at once. Your risk is speed without direction.",
+"Strength — you win by not escalating. Your risk is confusing gentleness with passivity.",
+"The Hermit — you find it by going quiet. Your risk is calling withdrawal a practice.",
+"Wheel of Fortune — you are good at reading turns. Your risk is waiting for one instead of making one.",
+"Justice — you weigh things honestly, including yourself. Your risk is a fairness that never forgives.",
+"The Hanged Man — you see it from the inverted angle. Your risk is suspending judgement indefinitely.",
+"Death — you are built for clean endings. Your risk is cutting before the thing is actually dead.",
+"Temperance — you work by blending, not choosing. Your risk is diluting what needed to stay strong.",
+"The Devil — you see the bargain and the chain. Your risk is staying for the terms you already understand.",
+"The Tower — you are honest about collapse. Your risk is hastening one to skip the waiting.",
+"The Star — you keep going on very little. Your risk is hope without a next action.",
+"The Moon — you read the unclear correctly. Your risk is trusting a mood over evidence.",
+"The Sun — you clarify things by being plain. Your risk is underestimating how much people needed that.",
+"Judgement — you are good at the honest reckoning. Your risk is summoning everyone but yourself.",
+"The World — you finish things. Your risk is starting the next one before you have stood in this one.",
+];
+const LENS_ZH = [
+"愚者 —— 你在计划没成型时动得最好。你的风险不是莽撞，是等一个”准备好了”的感觉。",
+"魔术师 —— 你靠把现有的东西组装起来拿到想要的。你的风险是力气散着使。",
+"女祭司 —— 你在能讲清道理之前就知道。你的风险是用噪音把它压过去。",
+"皇后 —— 你靠照看把东西养大。你的风险是照顾一直朝外，从不朝内。",
+"皇帝 —— 结构让你稳。你的风险是把”控制”当成”稳定”。",
+"教皇 —— 你信经过别人检验的东西。你的风险是继承了一条你早已长大的规矩。",
+"恋人 —— 你按自己忠于什么来做决定。你的风险是把价值问题当成偏好问题。",
+"战车 —— 你靠同时握住两样东西往前走。你的风险是有速度没方向。",
+"力量 —— 你靠不升级冲突来赢。你的风险是把温和误当成被动。",
+"隐者 —— 你安静下来才找得到。你的风险是把退缩叫做修行。",
+"命运之轮 —— 你擅长读懂转折。你的风险是等一个转折，而不是造一个。",
+"正义 —— 你连自己都称得诚实。你的风险是一种从不肯原谅的公平。",
+"倒吊人 —— 你从倒过来的角度看。你的风险是把判断无限期悬置。",
+"死神 —— 你天生适合干净的结束。你的风险是在东西真死之前就动刀。",
+"节制 —— 你靠调和而不是取舍来成事。你的风险是把该保持浓度的地方调淡了。",
+"恶魔 —— 你看得见那笔交易和那条锁链。你的风险是为了早已明白的条款留下。",
+"高塔 —— 你对崩塌很诚实。你的风险是催一场崩塌，好跳过等待。",
+"星星 —— 你靠很少的东西继续走。你的风险是有希望而没有下一步动作。",
+"月亮 —— 你把不清楚的东西读对了。你的风险是信情绪多过信证据。",
+"太阳 —— 你靠说得直白把事讲清楚。你的风险是低估了别人多需要这个。",
+"审判 —— 你擅长诚实地清算。你的风险是把所有人都召来，除了你自己。",
+"世界 —— 你有始有终。你的风险是还没在这一件里站定，就开了下一件。",
+];
+
+/* ── 界面文案 ── */
+const T = {
+ en:{
+  title:"The Daily <em>Decan</em><span class='en'>one card · derived not drawn</span>",
+  sub:"One card a day — <b>derived</b>, not drawn. Your card comes from where the Moon actually stands in the thirty-six decans of the Golden Dawn tables. Every step is shown.",
+  lbl:"Your date of birth — used once, kept on your device, never sent anywhere",
+  go:"Reveal today’s card", hint:"One card per day. It does not re-roll — come back tomorrow.",
+  up:"upright", rev:"reversed",
+  t1:"Today", t2:"If you do one thing", t3:"Watch for", t4:"Through your own card",
+  copy:"Copy as text", toast:"Copied",
+  lock:"Tomorrow this resolves to a different decan. Nothing here is randomised, and nothing was sent to a server.",
+  dsum:"Show the derivation — exactly how this card was reached",
+  dnote:"This is a designed system built on published correspondences (Golden Dawn <i>Book T</i> decan attributions and standard numerology reduction). It is not a random number generator, and it does not claim to predict anything.",
+  f1:"No account. No cookies. No server. Everything above is computed in your browser.",
+  f2:"Source on GitHub",
+  decan:"decan", ruledby:"ruled by", moonin:"Moon in", yourarcana:"your arcana, from",
+  s1:"Today is", s1b:"— one draw per day; there is no re-roll.",
+  s2:"Julian day", s2b:", computed locally.",
+  s3:"The Moon stands at", s3b:"of ecliptic longitude — in", s3c:", decan",
+  s5:"The Sun stands at", s5b:"; elongation", s5c:"→",
+  s6:"The Moon is", s6a:"waxing", s6b:"waning", s6c:"→ the card is read",
+  s7:"Your birth date reduces to", s7b:"used only as the lens above.",
+ },
+ zh:{
+  title:"每日<em>旬星</em><span class='en'>The Daily Decan</span>",
+  sub:"一天一张牌 —— 是<b>推</b>出来的，不是抽出来的。今日牌取自月亮此刻真实所在的旬位（黄金黎明旬表），每一步都摊开给你看。",
+  lbl:"你的出生日期 —— 只在本地计算一次，不上传到任何地方",
+  go:"看今日之牌", hint:"一天一牌，不能重抽 —— 明天再来。",
+  up:"正位", rev:"逆位",
+  t1:"今日", t2:"若只做一件事", t3:"留意", t4:"照你自己的本命牌",
+  copy:"复制为文字", toast:"已复制",
+  lock:"明天月亮会走到下一旬。这里没有任何随机数，也没有任何数据离开你的设备。",
+  dsum:"展开推导 —— 这张牌是怎么算出来的",
+  dnote:"这是一套建立在公开对应关系上的设计系统（黄金黎明《Book T》旬表归属、标准命数归约）。它不是随机数生成器，也不声称能预测任何事。",
+  f1:"无账号 · 无 cookie · 无服务器 · 以上全部在你的浏览器里计算",
+  f2:"源码在 GitHub",
+  decan:"第", ruledby:"守护", moonin:"月亮在", yourarcana:"你的本命牌，取自",
+  s1:"今天是", s1b:"—— 一天一次，不能重抽。",
+  s2:"儒略日", s2b:"，本地计算。",
+  s3:"月亮黄经", s3b:"—— 位于", s3c:"，第", s3d:"旬",
+  s5:"太阳黄经", s5b:"；距角", s5c:"→",
+  s6:"月相为", s6a:"盈", s6b:"亏", s6c:"→ 此牌读作",
+  s7:"生日归约到", s7b:"，仅用作上面的解读透镜。",
+ },
+};
+
+/* ══════════════════ 二、天文计算 · astronomy ══════════════════ */
+const D2R=Math.PI/180;
+const norm=a=>((a%360)+360)%360;
+
+function julianDay(y,m,d){
+  if(m<=2){y-=1;m+=12;}
+  const A=Math.floor(y/100), B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+}
+function sunLon(jd){
+  const T=(jd-2451545)/36525;
+  const L0=norm(280.46646+36000.76983*T+0.0003032*T*T);
+  const M=norm(357.52911+35999.05029*T-0.0001537*T*T);
+  const C=Math.sin(M*D2R)*(1.914602-0.004817*T-0.000014*T*T)
+        + Math.sin(2*M*D2R)*(0.019993-0.000101*T)
+        + Math.sin(3*M*D2R)*0.000289;
+  return norm(L0+C-0.00569-0.00478*Math.sin((125.04-1934.136*T)*D2R));
+}
+function moonLon(jd){
+  const T=(jd-2451545)/36525;
+  const Lp=norm(218.3164477+481267.88123421*T-0.0015786*T*T+T*T*T/538841-T*T*T*T/65194000);
+  const D =norm(297.8501921+445267.1114034*T-0.0018819*T*T+T*T*T/545868-T*T*T*T/113065000);
+  const M =norm(357.5291092+35999.0502909*T-0.0001536*T*T+T*T*T/24490000);
+  const Mp=norm(134.9633964+477198.8675055*T+0.0087414*T*T+T*T*T/69699-T*T*T*T/14712000);
+  const F =norm(93.2720950+483202.0175233*T-0.0036539*T*T-T*T*T/3526000+T*T*T*T/863310000);
+  const d=D*D2R,m=M*D2R,mp=Mp*D2R,f=F*D2R;
+  const s = 6.288774*Math.sin(mp)+1.274027*Math.sin(2*d-mp)+0.658314*Math.sin(2*d)
+        + 0.213618*Math.sin(2*mp)-0.185116*Math.sin(m)-0.114332*Math.sin(2*f)
+        + 0.058793*Math.sin(2*d-2*mp)+0.057066*Math.sin(2*d-m-mp)+0.053322*Math.sin(2*d+mp)
+        + 0.045758*Math.sin(2*d-m)-0.040923*Math.sin(m-mp)-0.034720*Math.sin(d)
+        - 0.030383*Math.sin(m+mp)+0.015327*Math.sin(2*d-2*f)-0.012528*Math.sin(mp+2*f)
+        + 0.010980*Math.sin(mp-2*f);
+  return norm(Lp+s);
+}
+const SIGNS=["Aries","Taurus","Gemini","Cancer","Leo","Virgo",
+             "Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+function phaseIdx(elong){
+  const e=norm(elong);
+  if(e<22.5||e>=337.5) return 0;
+  if(e<67.5) return 1; if(e<112.5) return 2; if(e<157.5) return 3;
+  if(e<202.5) return 4; if(e<247.5) return 5; if(e<292.5) return 6;
+  return 7;
+}
+const isWaxing=e=>norm(e)<180;
+
+function birthArcana(iso){
+  let n=iso.replace(/\D/g,"").split("").reduce((a,c)=>a+(+c),0);
+  while(n>22) n=String(n).split("").reduce((a,c)=>a+(+c),0);
+  return n===22 ? 0 : n;
+}
+
+/* ══════════════════ 三、生成式牌面 · generative sigil ══════════════════ */
+const SUIT_COLOR={Wands:"#d2603a",Cups:"#3f7fa8",Swords:"#c9b25a",Pentacles:"#5f8a5a"};
+const GLYPH={Sun:"☉",Moon:"☾",Mercury:"☿",Venus:"♀",Mars:"♂",Jupiter:"♃",Saturn:"♄"};
+const NUMWORD={Two:2,Three:3,Four:4,Five:5,Six:6,Seven:7,Eight:8,Nine:9,Ten:10};
+
+function sigil(cardEn, decanIndex, planet, reversed){
+  const suit=cardEn.split(" ").pop();
+  const pip =NUMWORD[cardEn.split(" ")[0]]||0;   // 牌的数字决定边数
+  const c   =SUIT_COLOR[suit]||"#c8a24a";
+  const W=150,H=230,cx=W/2,cy=H/2;
+  let s=`<rect width="${W}" height="${H}" fill="#0b0d1a"/>`;
+  s+=`<rect x="6" y="6" width="${W-12}" height="${H-12}" fill="none" stroke="${c}" stroke-width="1" opacity=".5" rx="6"/>`;
+  s+=`<rect x="11" y="11" width="${W-22}" height="${H-22}" fill="none" stroke="${c}" stroke-width=".5" opacity=".3" rx="4"/>`;
+  const r=52;
+  for(let i=0;i<36;i++){
+    const a=(-90+i*10)*D2R, on=(i===decanIndex);
+    const r1=on?r-11:r-6, r2=r+6;
+    s+=`<line x1="${cx+r1*Math.cos(a)}" y1="${cy+r1*Math.sin(a)}" x2="${cx+r2*Math.cos(a)}" y2="${cy+r2*Math.sin(a)}" stroke="${on?c:"#3a4166"}" stroke-width="${on?2.2:.9}" opacity="${on?1:.7}"/>`;
+  }
+  const n=Math.max(3,pip), R=30;
+  let pts=[];
+  for(let i=0;i<n;i++){
+    const a=(-90+i*360/n+decanIndex*7)*D2R;
+    pts.push(`${(cx+R*Math.cos(a)).toFixed(1)},${(cy+R*Math.sin(a)).toFixed(1)}`);
+  }
+  s+=`<polygon points="${pts.join(" ")}" fill="none" stroke="${c}" stroke-width="1.6" opacity=".95"/>`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="7.5" fill="none" stroke="${c}" stroke-width="1.1" opacity=".85"/>`;
+  s+=`<text x="${cx}" y="${cy+5.5}" text-anchor="middle" font-size="11" fill="${c}">${GLYPH[planet]||"✦"}</text>`;
+  [[20,26],[W-20,26],[20,H-26],[W-20,H-26]].forEach(([x,y])=>{
+    s+=`<circle cx="${x}" cy="${y}" r="2.1" fill="${c}" opacity=".55"/>`; });
+  if(reversed) s+=`<text x="${W-16}" y="${H-14}" text-anchor="end" font-size="9" fill="#e0a0a0" opacity=".9">REV</text>`;
+  return s;
+}
+
+/* ══════════════════ 四、渲染 · render ══════════════════ */
+const $=id=>document.getElementById(id);
+const MONTHS_EN=["January","February","March","April","May","June","July",
+                 "August","September","October","November","December"];
+let LANG="en";
+try{ LANG=(localStorage.getItem("dd.lang"))||((navigator.language||"en").toLowerCase().startsWith("zh")?"zh":"en"); }catch(e){}
+
+function todayISO(){
+  const d=new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+const zhName = cardEn => CARD_ZH[cardEn] || cardEn;
+const zhCard = cardEn => LANG==="zh" ? `${zhName(cardEn)}<small>${cardEn}</small>` : cardEn;
+
+function paintChrome(){
+  const t=T[LANG];
+  $("h1").innerHTML=t.title; $("sub").innerHTML=t.sub;
+  $("lbl").textContent=t.lbl; $("go").textContent=t.go; $("hint").textContent=t.hint;
+  $("t1").textContent=t.t1; $("t2").textContent=t.t2; $("t3").textContent=t.t3; $("t4").textContent=t.t4;
+  $("copy").textContent=t.copy; $("dsum").textContent=t.dsum; $("dnote").innerHTML=t.dnote;
+  $("foot1").textContent=t.f1; $("foot2").textContent=t.f2;
+  $("lzh").className = LANG==="zh" ? "on" : "";
+  $("len").className = LANG==="en" ? "on" : "";
+  document.documentElement.lang = LANG==="zh" ? "zh-CN" : "en";
+}
+
+function reveal(){
+  const bd=$("bd").value;
+  if(!bd){ $("bd").focus(); return; }
+  try{ localStorage.setItem("dd.bd",bd); }catch(e){}
+  const t=T[LANG];
+
+  const t2=todayISO(), [ty,tm,td]=t2.split("-").map(Number);
+  const jd=julianDay(ty,tm,td);
+  const sl=sunLon(jd), ml=moonLon(jd);
+  const di=Math.floor(norm(ml)/10);
+  const dec=DECANS[di];
+  const suit=dec.c.split(" ").pop();
+  const elong=norm(ml-sl);
+  const pi=phaseIdx(elong);
+  const up=isWaxing(elong);
+  const ba=birthArcana(bd);
+  const r=(LANG==="zh"?R_ZH:R_EN)[dec.c]||["—","—","—"];
+  const lens=(LANG==="zh"?LENS_ZH:LENS_EN)[ba];
+  const signName = LANG==="zh"?SIGN_ZH[Math.floor(norm(ml)/30)]:SIGNS[Math.floor(norm(ml)/30)];
+  const planet   = LANG==="zh"?(PLANET_ZH[dec.p]||dec.p):dec.p;
+  const phaseNm  = LANG==="zh"?PHASE_ZH[pi]:PHASE_EN[pi];
+  const elem     = LANG==="zh"?ELEM_ZH[ELEMENT[suit]]:ELEMENT[suit];
+  const suitNm   = LANG==="zh"?SUIT_ZH[suit]:suit;
+  const majorNm  = LANG==="zh"?MAJOR_ZH[ba]:MAJOR_EN[ba];
+  const corrNm   = LANG==="zh"?(CORR_ZH[MAJOR_X[ba]]||MAJOR_X[ba]):MAJOR_X[ba];
+
+  $("pos").textContent = up?t.up:t.rev;
+  $("pos").setAttribute("class","pos"+(up?"":" rev"));
+  $("cname").innerHTML = zhCard(dec.c);
+  $("cattr").innerHTML = LANG==="zh"
+    ? `<b>${signName}</b> · ${t.decan} ${(di%3)+1} 旬 · ${planet} 守护<br><b>${suitNm}</b> · ${elem} · ${t.moonin}${signName} · ${phaseNm}`
+    : `<b>${signName}</b> · ${t.decan} ${(di%3)+1} · ${t.ruledby} <b>${planet}</b><br><b>${suitNm}</b> · ${elem} · ${t.moonin} ${signName} · ${phaseNm}`;
+
+  $("r1").textContent=r[0]; $("r2").textContent=r[1]; $("r3").textContent=r[2];
+  $("r4").innerHTML = LANG==="zh"
+    ? `<b>${majorNm}</b>（${t.yourarcana} ${bd}）—— ` + lens.replace(/^[^—]+——\s*/,"")
+    : `<b>${majorNm}</b> (${t.yourarcana} ${bd}) — ` + lens.replace(/^[^—]+—\s*/,"");
+  $("lock").textContent=t.lock;
+
+  $("sig").innerHTML = sigil(dec.c, di, dec.p, !up);
+  $("sig").setAttribute("class","sigil"+(up?"":" rev"));
+
+  const dateStr = LANG==="zh" ? `${ty} 年 ${tm} 月 ${td} 日` : `${td} ${MONTHS_EN[tm-1]} ${ty}`;
+  const steps = LANG==="zh" ? [
+    `${t.s1} <code>${dateStr}</code> ${t.s1b}`,
+    `${t.s2} <code>${jd.toFixed(1)}</code>${t.s2b}`,
+    `${t.s3} <code>${norm(ml).toFixed(2)}°</code> ${t.s3b}<b>${signName}</b>${t.s3c} ${(di%3)+1} ${t.s3d}`,
+    `36 旬中的第 <b>${di+1}</b> 旬 → <b>${zhName(dec.c)}</b>（${planet}在${signName}），依黄金黎明旬表归属。`,
+    `${t.s5} <code>${norm(sl).toFixed(2)}°</code>${t.s5b} <code>${elong.toFixed(1)}°</code> ${t.s5c} <b>${phaseNm}</b>。`,
+    `${t.s6}<b>${up?t.s6a:t.s6b}</b>${t.s6c}<b>${up?t.up:t.rev}</b>。`,
+    `${t.s7} <code>${ba}</code> → <b>${majorNm}</b>（${MAJOR_L[ba]}, ${corrNm}）${t.s7b}`,
+  ] : [
+    `${t.s1} <code>${dateStr}</code> ${t.s1b}`,
+    `${t.s2} <code>${jd.toFixed(1)}</code>${t.s2b}`,
+    `${t.s3} <code>${norm(ml).toFixed(2)}°</code> ${t.s3b} <b>${signName}</b>${t.s3c} ${(di%3)+1}.`,
+    `Decan ${di+1} of 36 → <b>${dec.c}</b> (${planet} in ${signName}), per the Golden Dawn decan attributions.`,
+    `${t.s5} <code>${norm(sl).toFixed(2)}°</code>${t.s5b} <code>${elong.toFixed(1)}°</code> ${t.s5c} <b>${phaseNm}</b>.`,
+    `${t.s6} <b>${up?t.s6a:t.s6b}</b> ${t.s6c} <b>${up?t.up:t.rev}</b>.`,
+    `${t.s7} <code>${ba}</code> → <b>${majorNm}</b> (${MAJOR_L[ba]}, ${corrNm}), ${t.s7b}`,
+  ];
+  $("steps").innerHTML = steps.map(x=>`<li>${x}</li>`).join("");
+
+  $("out").classList.add("on");
+}
+
+function copyText(){
+  const t=T[LANG];
+  const txt = LANG==="zh"
+    ? `每日旬星 —— ${todayISO()}\n${CARD_ZH[$("cname").querySelector?$("cname").childNodes[0].textContent:"—"]||""} ${$("cname").textContent}（${$("pos").textContent}）\n\n${t.t1}：${$("r1").textContent}\n${t.t2}：${$("r2").textContent}\n${t.t3}：${$("r3").textContent}\n${t.t4}：${$("r4").textContent}\n\n（月亮旬位推出，非随机；无账号、无追踪）`
+    : `The Daily Decan — ${todayISO()}\n${$("cname").textContent} (${$("pos").textContent})\n\n${t.t1}: ${$("r1").textContent}\n${t.t2}: ${$("r2").textContent}\n${t.t3}: ${$("r3").textContent}\n${t.t4}: ${$("r4").textContent}\n\n(derived from the Moon's decan — not random; no account, no tracking)`;
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
+    .then(()=>toast(t.toast), ()=>{ const ta=document.createElement("textarea");
+      ta.value=txt; document.body.appendChild(ta); ta.select();
+      try{document.execCommand("copy"); toast(t.toast);}catch(e){toast("⌘C");}
+      document.body.removeChild(ta); });
+}
+let tt;
+function toast(m){ const el=$("toast"); el.textContent=m; el.classList.add("on");
+  clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("on"),1600); }
+
+function setLang(l){
+  LANG=l; try{ localStorage.setItem("dd.lang",l); }catch(e){}
+  paintChrome();
+  if($("bd").value) reveal();
+}
+$("lzh").addEventListener("click",()=>setLang("zh"));
+$("len").addEventListener("click",()=>setLang("en"));
+$("go").addEventListener("click",reveal);
+$("copy").addEventListener("click",copyText);
+$("bd").addEventListener("change",reveal);
+
+paintChrome();
+try{ const s=localStorage.getItem("dd.bd"); if(s){ $("bd").value=s; reveal(); } }catch(e){}
+</script>
+</body>
+</html>
