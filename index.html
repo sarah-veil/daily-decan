@@ -454,6 +454,7 @@ const T = {
   dsum:"Show the derivation — exactly how this card was reached",
   dnote:"This is a designed system built on published correspondences (Golden Dawn <i>Book T</i> decan attributions and standard numerology reduction). It is not a random number generator, and it does not claim to predict anything.",
   f1:"No account. No cookies. No server. Everything above is computed in your browser.",
+  f1a:"No account, no cookies. Everything above is computed in your browser. One anonymous page count \u2014 no personal data, and nothing you type ever leaves your device.",
   f2:"Source on GitHub",
   f3:"Tell me what landed and what didn't",
   f3gh:"Feedback on GitHub (needs an account)",
@@ -490,6 +491,7 @@ const T = {
   dsum:"展开推导 —— 这张牌是怎么算出来的",
   dnote:"这是一套建立在公开对应关系上的设计系统（黄金黎明《Book T》旬表归属、标准命数归约）。它不是随机数生成器，也不声称能预测任何事。",
   f1:"无账号 · 无 cookie · 无服务器 · 以上全部在你的浏览器里计算",
+  f1a:"无账号 · 无 cookie · 以上全部在你的浏览器里计算 · 外加一个匿名页面计数（无个人数据，你输入的任何东西都不离开设备）",
   f2:"源码在 GitHub",
   f3:"哪句说到你了，哪句没有",
   f3gh:"在 GitHub 上提意见（需要账号）",
@@ -604,6 +606,11 @@ const MONTHS_EN=["January","February","March","April","May","June","July",
 // 访客大多是微信/小红书上的人，不会为提一句意见去注册 GitHub 账号。
 // 把不需要登录的问卷链接（腾讯问卷/金数据等）填在这里，页脚会自动改用它；
 // 留空则退回 GitHub issue 表单 —— 但那只对开发者可用，别当成通用入口。
+// ── 访问计数（默认关闭）──────────────────────────────────────────────
+// 留空 = 本站保持「零网络请求」，页脚文案照旧，一个字都不用改。
+// 填上 Cloudflare Web Analytics 的 token = 启用；页脚文案会自动换成如实版本，
+// 因为「无服务器」那句话就不再为真了。
+const ANALYTICS_TOKEN = "";
 const FEEDBACK_URL = "";
 const FEEDBACK_GH  = "https://github.com/sarah-veil/daily-decan/issues/new?template=feedback.yml";
 
@@ -654,7 +661,8 @@ function paintChrome(){
   $("t1").textContent=t.t1; $("t2").textContent=t.t2; $("t3").textContent=t.t3; $("t4").textContent=t.t4;
   $("copy").textContent=t.copy; $("save").textContent=t.save;
   $("dsum").textContent=t.dsum; $("dnote").innerHTML=t.dnote;
-  $("foot1").textContent=t.f1; $("foot2").textContent=t.f2;
+  $("foot1").textContent = ANALYTICS_TOKEN ? t.f1a : t.f1;
+  $("foot2").textContent=t.f2;
   $("foot3").href = FEEDBACK_URL || FEEDBACK_GH;
   $("foot3").textContent = FEEDBACK_URL ? t.f3 : t.f3gh;
   $("lzh").className = LANG==="zh" ? "on" : "";
@@ -959,6 +967,15 @@ if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){
   window.addEventListener("load", function(){
     navigator.serviceWorker.register("sw.js").catch(function(){ /* 缓存失败不影响使用 */ });
   });
+}
+
+// 只有填了 token 才会发这一个请求；留空则本站依旧零网络请求
+if(ANALYTICS_TOKEN){
+  const b=document.createElement("script");
+  b.defer=true;
+  b.src="https://static.cloudflareinsights.com/beacon.min.js";
+  b.setAttribute("data-cf-beacon", JSON.stringify({token:ANALYTICS_TOKEN}));
+  document.head.appendChild(b);
 }
 
 paintChrome();
