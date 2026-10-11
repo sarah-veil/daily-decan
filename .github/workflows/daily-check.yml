@@ -1,0 +1,121 @@
+name: 站点每日巡检
+
+# 每天 01:00 UTC = 09:00 北京时间，抓一次线上站点，和仓库里的 index.html 对账
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 取下仓库
+        uses: actions/checkout@v4
+
+      - name: 抓取线上站点并逐项对账
+        id: chk
+        run: |
+          set -uo pipefail
+          URL="https://sarah-veil.github.io/daily-decan/"
+          FAIL=""
+
+          # ① 站点可达（带时间戳绕开 CDN 缓存）
+          CODE=$(curl -sS -o /tmp/live.html -w '%{http_code}' \
+                   -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' \
+                   "$URL?cb=$(date +%s)" || echo 000)
+          if [ "$CODE" != "200" ]; then
+            FAIL="${FAIL}• 线上返回 HTTP ${CODE}（应为 200）"$'\n'
+          fi
+
+          # ② 内容不是空壳
+          BYTES=$(wc -c < /tmp/live.html | tr -d ' ')
+          if [ "$BYTES" -lt 3000 ]; then
+            FAIL="${FAIL}• 线上内容只有 ${BYTES} 字节（应 ≥ 3000）"$'\n'
+          fi
+
+          # ③ 线上 == 仓库里的 index.html
+          SHA_LIVE=$(sha256sum /tmp/live.html | awk '{print $1}')
+          SHA_REPO=$(sha256sum index.html   | awk '{print $1}')
+          if [ "$SHA_LIVE" != "$SHA_REPO" ]; then
+            FAIL="${FAIL}• 线上与仓库 index.html 字节不一致（线上 ${SHA_LIVE:0:12} / 仓库 ${SHA_REPO:0:12}）"$'\n'
+          fi
+
+          # ④ 关键标记还在（防止页面被截断/降级）
+          for M in tagBirth cname2 manifest.webmanifest og:image foot3; do
+            if ! grep -q "$M" /tmp/live.html; then
+              FAIL="${FAIL}• 线上缺少关键标记：${M}"$'\n'
+            fi
+          done
+
+          # ⑤ 仓库自身状态
+          REPO_BYTES=$(wc -c < index.html | tr -d ' ')
+
+          {
+            echo "线上地址：$URL"
+            echo "HTTP：$CODE"
+            echo "线上字节：$BYTES"
+            echo "仓库字节：$REPO_BYTES"
+            echo "线上 sha256：$SHA_LIVE"
+            echo "仓库 sha256：$SHA_REPO"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -n "$FAIL" ]; then
+            echo "failed=1" >> "$GITHUB_OUTPUT"
+            {
+              echo ""
+              echo "### ❌ 巡检未通过"
+              echo "$FAIL"
+            } >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo "FAIL<<EOF"
+              echo "$FAIL"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+          else
+            echo "failed=0" >> "$GITHUB_OUTPUT"
+            {
+              echo ""
+              echo "### ✅ 巡检通过"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: 失败则开工单（已开过就追加一条）
+        if: steps.chk.outputs.failed == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FAIL: ${{ steps.chk.outputs.FAIL }}
+        run: |
+          set -uo pipefail
+          TITLE="站点巡检失败：线上内容与仓库不一致或站点不可达"
+          OPEN=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+                   --search "in:title 站点巡检失败" --json number --jq 'length')
+          BODY=$(printf '自动巡检发现的问题（%s 北京时间）：\n\n%s\n\n---\n由 `.github/workflows/daily-check.yml` 每天 09:00 自动生成。' \
+                   "$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M')" "$FAIL")
+          if [ "$OPEN" = "0" ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --body "$BODY"
+            echo "已开新工单"
+          else
+            N=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+                  --search "in:title 站点巡检失败" --json number --jq '.[0].number')
+            gh issue comment "$N" --repo "$GITHUB_REPOSITORY" --body "$BODY"
+            echo "已在工单 #$N 追加"
+          fi
+
+      - name: 恢复正常则自动销单
+        if: steps.chk.outputs.failed == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          NUMS=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+                   --search "in:title 站点巡检失败" --json number --jq '.[].number')
+          for N in $NUMS; do
+            gh issue close "$N" --repo "$GITHUB_REPOSITORY" \
+              --comment "巡检已恢复正常（$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M') 北京时间），自动销单。"
+            echo "已销单 #$N"
+          done
