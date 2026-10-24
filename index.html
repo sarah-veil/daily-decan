@@ -6,7 +6,7 @@
 <title>每日旬星 · The Daily Decan</title>
 <meta name="description" content="两张牌：今天这张由月亮此刻所在的旬位推出，全世界一样；另一张只属于你，由你出生那天的月亮旬位推出。都不是随机抽取。推导全部摊开，中英双语，无账号、无追踪、纯本地计算。">
 <meta name="theme-color" content="#0e1020">
-<link rel="canonical" href="https://sarah-veil.github.io/daily-decan/">
+<link rel="canonical" href="https://daily.dqquan.com/">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,8 +18,8 @@
 <meta property="og:site_name" content="The Daily Decan">
 <meta property="og:title" content="The Daily Decan · 每日旬星">
 <meta property="og:description" content="Two cards, both derived from the sky, neither drawn: today's decan — the same for everyone alive — and the decan the Moon stood in on the day you were born. Every step is shown.">
-<meta property="og:url" content="https://sarah-veil.github.io/daily-decan/">
-<meta property="og:image" content="https://sarah-veil.github.io/daily-decan/og.png">
+<meta property="og:url" content="https://daily.dqquan.com/">
+<meta property="og:image" content="https://daily.dqquan.com/og.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -29,7 +29,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Daily Decan · 每日旬星">
 <meta name="twitter:description" content="Two cards, both derived from the sky, neither drawn: today's decan, the same for everyone alive — and the one you were born under.">
-<meta name="twitter:image" content="https://sarah-veil.github.io/daily-decan/og.png">
+<meta name="twitter:image" content="https://daily.dqquan.com/og.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='none' stroke='%23c8a24a' stroke-width='2'/><circle cx='16' cy='16' r='4' fill='%23c8a24a'/></svg>">
 <style>
   :root{
@@ -61,6 +61,12 @@
   h1 em{font-style:normal;color:var(--gold2)}
   h1 .en{display:block;font-size:14px;letter-spacing:2.4px;color:var(--dim);text-transform:uppercase;margin-top:6px;font-weight:400}
   .sub{color:var(--dim);font-size:14.5px;max-width:48ch;margin:0 auto}
+  @media(max-width:520px){
+    .lang{position:static;justify-content:center;margin-bottom:10px}
+    .wrap{padding:20px 16px 56px}
+    .panel{padding:17px}
+    .cardwrap{gap:18px}
+  }
   .panel{
     background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
     border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0;
@@ -349,7 +355,7 @@ const R_EN = {
 const R_ZH = {
 "Two of Wands":["该做的决定其实已经做了，只是你还把它当成“可选项”。现在真正的风险不是选错，是继续等。","把你在等的那件事说出口。说不出来，就不是在等，是在躲。","临门之前再找一个人确认一下。"],
 "Three of Wands":["之前发出去的东西还在路上。该做的是带着动作地等，不是再开一摊。","做一件只有“这事成了”才说得通的小事。","把着急打扮成勤快。"],
-"Four of Wands":["有个坎值得标记一下。不体面的进度也是进度，而且已经够完整，可以认了。","把一件做完的事讲给一个人听。别顺口贬低它。","跳过“认账”这一步，直接扑向下一件。"],
+"Four of Wands":["有个阶段值得标记。哪怕进展不够漂亮，也是进展；它已经完整到值得你承认。","把一件做完的事讲给一个人听，别顺口贬低它。","跳过“承认已经完成”这一步，直接扑向下一件。"],
 "Five of Pentacles":["缺是缺，但比你感觉的窄。真正冷的那部分通常是被孤立，不是不够。","向一个具体的人要一样具体的东西。不要泛泛地“求帮忙”。","把倒霉的一周当成永久状态。"],
 "Six of Pentacles":["给和收在某处失了衡，而且你清楚是哪处。带条件的慷慨不算慷慨。","给一样东西，不附带后续；或者收下一样东西，不马上还回去。","在一段不是交易的关系里记账。"],
 "Seven of Pentacles":["你在播种和收获之间，这段最没意思也最要紧。没出问题，只是还没完。","看看你已经种出了什么，而不是还缺什么。","把东西拔起来看它长没长。"],
@@ -375,14 +381,14 @@ const R_ZH = {
 "Nine of Wands":["你累了，但比你以为的更接近终点。守好最后一程是对的，重打旧仗不是。","只做下一件必须做的事，不是把剩下的全做完。","把疲惫当成“我错了”的证据。"],
 "Ten of Wands":["你多扛了一份，因为你从没正式放下过任何一份。是累积造成的过载，不是危机。","把一项责任明确交还给一个指名的人。","当那个唯一知道它有多重的人。"],
 "Two of Pentacles":["杂耍是本事，但不是长久之计。有一样东西必须离开这个循环。","挑出你要放手的那一个，并且故意让它掉下去。","以“我能扛”为荣，而不是去修那个担子。"],
-"Three of Pentacles":["这活多一双眼睛会更好，而开口的代价比你以为的小。手艺在成为独门之前，先是协作。","把一件没做完的东西给一个你信得过眼光的人看。","把稿子保护起来，不让它拿到该拿的反馈。"],
+"Three of Pentacles":["这件事多一双眼睛会更好，而开口求助的代价没有你想的那么大。手艺先经过协作，才谈得上独当一面。","请一个你信得过的人看看还没做完的作品。","因为害怕评价，迟迟不把初稿拿出来。"],
 "Four of Pentacles":["攥着的成本已经高过那东西本身。握得太紧的安全感，不再是安全感。","有意识地花掉一样东西——钱、时间，或者一个位置。","把控制当成安全。"],
 "Five of Swords":["有一场赢，你可能该让掉。既对又孤单，这两件事同时到的次数比人想的多。","放过一场争论，但不必让掉背后的那个点。","拿走那个要拿关系来换的胜利。"],
 "Six of Swords":["一个过渡正在进行，难的部分已经过去了。新地方还不激动人心——只是安静些。","别再重审“要不要走”这个决定。已经定了。","回头看，找理由掉头。"],
 "Seven of Swords":["有件事在绕道进行——你绕别人，或者别人绕你。含蓄没问题，自欺不行。","把那个你一直斜着问的问题，正面问出来。","以为自己能管住一件不肯命名的处境。"],
 "Eight of Cups":["你要离开的这样东西并不坏，只是对你而言已经完了。这是最难解释的一种离开，但它依然成立。","朝“离开”迈一个具体的步子，哪怕不告诉任何人。","因为“还没那么糟”而留下。"],
 "Nine of Cups":["你想要的，大体已经在这儿了，只是“想要”还没跟上。满足既是一种感受，也是一个决定。","说出那个已经实现的愿望，用陈述句，别加“还行吧”。","把满足感一直押到下一件事之后。"],
-"Ten of Cups":["你身上好的那部分是平常而耐用的，正因如此容易被忽略。家常的、不体面的，要算双倍。","做一件小事，让某个平常的晚上对别人好一点。","把最好的注意力留给陌生人。"],
+"Ten of Cups":["你生活里真正好的部分，往往平常而耐用，也因此最容易被忽略。那些家常、不起眼的幸福，值得算双倍。","做一件小事，让某个平常的晚上对身边的人好一点。","把最好的耐心留给陌生人。"],
 };
 
 /* ── 22 张本命牌（透镜）── */
@@ -441,7 +447,7 @@ const T = {
   title:"The Daily <em>Decan</em><span class='en'>one card · derived not drawn</span>",
   sub:"Two cards, both <b>derived</b>, never drawn. One is today’s — the decan the Moon stands in right now, the same for everyone alive. The other is yours alone: the decan the Moon stood in on the day you were born. Every step is shown.",
   lbl:"Your date of birth — it selects your own card. Kept on your device, never sent anywhere",
-  go:"Reveal today’s card", hint:"One card per day. It does not re-roll — come back tomorrow.",
+  go:"Generate my cards", hint:"One reading per day. It cannot be re-rolled — come back tomorrow.",
   up:"upright", rev:"reversed",
   shared:"Today · the same card for everyone",
   yours:"Your birth decan · yours alone",
@@ -456,7 +462,7 @@ const T = {
   f1:"No account. No cookies. No server. Everything above is computed in your browser.",
   f1a:"No account, no cookies. Everything above is computed in your browser. One anonymous page count \u2014 no personal data, and nothing you type ever leaves your device.",
   f2:"Source on GitHub",
-  f3:"Tell me what landed and what didn't",
+  f3:"Tell me what landed and what didn't (no account needed)",
   f3gh:"Feedback on GitHub (needs an account)",
   decan:"decan", ruledby:"ruled by", moonin:"Moon in", yourarcana:"your arcana, from",
   s1:"Today is", s1b:"— one draw per day; there is no re-roll.",
@@ -478,13 +484,13 @@ const T = {
   title:"每日<em>旬星</em><span class='en'>The Daily Decan</span>",
   sub:"两张牌，都是<b>推</b>出来的，不是抽出来的。一张是今日牌 —— 月亮此刻所在的旬位，今天全世界所有人拿到的是同一张。另一张只属于你 —— 你出生那天月亮所在的旬位。每一步都摊开给你看。",
   lbl:"你的出生日期 —— 用来定出你自己那张牌。只在本地计算，不上传到任何地方",
-  go:"看今日之牌", hint:"一天一牌，不能重抽 —— 明天再来。",
+  go:"生成我的牌", hint:"一天一读，不能重抽 —— 明天再来。",
   up:"正位", rev:"逆位",
   shared:"今日 · 全世界同一张",
   yours:"你的本命旬位 · 只属于你",
   natal:"本命旬位",
   t1:"今日", t2:"若只做一件事", t3:"留意",
-  t4:"你这张牌是什么", t5:"它要你做的事", t6:"它可能骗你的地方",
+  t4:"这张牌的底色", t5:"它提醒你做的事", t6:"它可能误导你的地方",
   t7:"两张牌怎么碰面",
   copy:"复制为文字", save:"存成图片", toast:"已复制",
   lock:"明天月亮会走到下一旬。这里没有任何随机数，也没有任何数据离开你的设备。",
@@ -493,7 +499,7 @@ const T = {
   f1:"无账号 · 无 cookie · 无服务器 · 以上全部在你的浏览器里计算",
   f1a:"无账号 · 无 cookie · 以上全部在你的浏览器里计算 · 外加一个匿名页面计数（无个人数据，你输入的任何东西都不离开设备）",
   f2:"源码在 GitHub",
-  f3:"哪句说到你了，哪句没有",
+  f3:"哪句说到你了，哪句没有（无需账号）",
   f3gh:"在 GitHub 上提意见（需要账号）",
   decan:"第", ruledby:"守护", moonin:"月亮在", yourarcana:"本命大牌，取自",
   s1:"今天是", s1b:"—— 一天一次，不能重抽。",
@@ -611,7 +617,8 @@ const MONTHS_EN=["January","February","March","April","May","June","July",
 // 填上 Cloudflare Web Analytics 的 token = 启用；页脚文案会自动换成如实版本，
 // 因为「无服务器」那句话就不再为真了。
 const ANALYTICS_TOKEN = "";
-const FEEDBACK_URL = "";
+const FEEDBACK_URL = "mailto:hello@dqquan.com?subject=" +
+  encodeURIComponent("每日旬星 · 读者反馈");
 const FEEDBACK_GH  = "https://github.com/sarah-veil/daily-decan/issues/new?template=feedback.yml";
 
 let LAST=null;
@@ -924,7 +931,7 @@ function renderCardBlob(){
       // 页脚
       g.fillStyle="#2a3050"; g.fillRect(PAD, H-104, W-PAD*2, 1);
       g.fillStyle="#9aa0b8"; g.font=F(sans,22,"400");
-      g.fillText("sarah-veil.github.io/daily-decan", PAD, H-60);
+    g.fillText("daily.dqquan.com", PAD, H-60);
       g.textAlign="right"; g.fillText(todayISO(), W-PAD, H-60); g.textAlign="left";
 
       cv.toBlob(function(b){ b?resolve(b):reject(new Error("toBlob failed")); }, "image/png");

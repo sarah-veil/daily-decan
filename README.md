@@ -13,7 +13,7 @@ You get **two cards, both derived from astronomy, neither drawn**:
 And a short line on how the two meet. Every step of both calculations is printed on the page, in
 plain sight.
 
-**Live: [sarah-veil.github.io/daily-decan](https://sarah-veil.github.io/daily-decan/)** · Single file · Installable (PWA) · Works offline · MIT
+**Live: [daily.dqquan.com](https://daily.dqquan.com/)** · Single file · Installable (PWA) · Works offline · MIT
 
 ![The Daily Decan](screenshot.png)
 
@@ -175,7 +175,7 @@ original work. The text of the 58 readings, the generative sigils, and the imple
 This is meant to be revised, not admired. The most useful thing you can send is not praise — it
 is the line that was **empty**, the one that could have applied to anybody:
 
-- **[Tell me what landed and what didn't](https://github.com/sarah-veil/daily-decan/issues/new?template=feedback.yml)** — includes a field for the Chinese prose, which is the thing I am least able to judge for myself.
+- **[Tell me what landed and what didn't](mailto:hello@dqquan.com?subject=%E6%AF%8F%E6%97%A5%E6%97%AC%E6%98%9F%20%C2%B7%20%E8%AF%BB%E8%80%85%E5%8F%8D%E9%A6%88)** — no account needed. Tell me which line was empty, vague, or unlike natural Chinese.
 - **[The derivation is wrong](https://github.com/sarah-veil/daily-decan/issues/new?template=bug.yml)** — open the derivation panel, check it against any ephemeris, and paste what you found. Astronomy being off is a bug, not a matter of taste.
 
 You do not need to be nice. Specific beats kind.

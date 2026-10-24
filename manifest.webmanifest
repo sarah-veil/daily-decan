@@ -1,6 +1,6 @@
 {
-  "name": "The Daily Decan · 每日旬星",
-  "short_name": "Daily Decan",
+  "name": "每日旬星 · The Daily Decan",
+  "short_name": "每日旬星",
   "description": "One card a day, derived from the decan the Moon occupies right now — not drawn at random. Full seven-step derivation shown. Bilingual EN/ZH. No account, no tracking, works offline.",
   "start_url": "./",
   "scope": "./",
@@ -8,7 +8,7 @@
   "orientation": "portrait",
   "background_color": "#0e1020",
   "theme_color": "#0e1020",
-  "lang": "en",
+  "lang": "zh-CN",
   "dir": "ltr",
   "categories": ["lifestyle", "entertainment"],
   "icons": [
