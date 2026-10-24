@@ -3,7 +3,7 @@
    offline and never touches the network after the first visit.
    Nothing is ever uploaded; this file makes no outbound requests. */
 
-const CACHE = "daily-decan-v3";
+const CACHE = "daily-decan-v5";
 const SHELL = [
   "./",
   "./index.html",

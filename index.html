@@ -73,11 +73,12 @@
   }
   label{display:block;font-size:13px;color:var(--dim);margin-bottom:8px}
   .row{display:flex;gap:10px;flex-wrap:wrap}
-  input[type=date]{
+  input.date-input{
     flex:1 1 200px;background:var(--ink2);border:1px solid var(--line);color:var(--txt);
     border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;
   }
-  input[type=date]:focus{outline:2px solid var(--gold);outline-offset:1px}
+  input.date-input:focus{outline:2px solid var(--gold);outline-offset:1px}
+  input.date-input[aria-invalid=true]{border-color:#b85b5b}
   button.act{
     background:linear-gradient(180deg,var(--gold2),var(--gold));color:#20180a;border:0;
     border-radius:10px;padding:11px 18px;font:600 14.5px/1 inherit;cursor:pointer;font-family:inherit;
@@ -86,6 +87,7 @@
     padding:10px 16px;font:500 14px/1 inherit;cursor:pointer;font-family:inherit}
   button:active{transform:translateY(1px)}
   .hint{font-size:12.5px;color:var(--dim);margin-top:9px}
+  .field-error{font-size:13px;color:#e0a0a0;margin:8px 0 0}
   #out{display:none}
   #out.on{display:block;animation:fade .5s ease}
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -153,9 +155,11 @@
   <div class="panel">
     <label for="bd" id="lbl"></label>
     <div class="row">
-      <input type="date" id="bd" min="1900-01-01" max="2100-12-31">
+      <input class="date-input" type="text" id="bd" inputmode="numeric" autocomplete="bday"
+             maxlength="10" placeholder="YYYY-MM-DD" aria-describedby="date-error hint">
       <button class="act" id="go"></button>
     </div>
+    <p class="field-error" id="date-error" role="alert" hidden></p>
     <p class="hint" id="hint"></p>
   </div>
 
@@ -446,7 +450,10 @@ const T = {
  en:{
   title:"The Daily <em>Decan</em><span class='en'>one card · derived not drawn</span>",
   sub:"Two cards, both <b>derived</b>, never drawn. One is today’s — the decan the Moon stands in right now, the same for everyone alive. The other is yours alone: the decan the Moon stood in on the day you were born. Every step is shown.",
-  lbl:"Your date of birth — it selects your own card. Kept on your device, never sent anywhere",
+  lbl:"Your date of birth — enter as YYYY-MM-DD. It selects your own card and stays on your device.",
+  datePlaceholder:"1988-11-03",
+  dateInvalid:"Enter a real date in YYYY-MM-DD format, for example 1988-11-03.",
+  dateRange:"Enter a date between 1900-01-01 and 2100-12-31.",
   go:"Generate my cards", hint:"One reading per day. It cannot be re-rolled — come back tomorrow.",
   up:"upright", rev:"reversed",
   shared:"Today · the same card for everyone",
@@ -483,7 +490,10 @@ const T = {
  zh:{
   title:"每日<em>旬星</em><span class='en'>The Daily Decan</span>",
   sub:"两张牌，都是<b>推</b>出来的，不是抽出来的。一张是今日牌 —— 月亮此刻所在的旬位，今天全世界所有人拿到的是同一张。另一张只属于你 —— 你出生那天月亮所在的旬位。每一步都摊开给你看。",
-  lbl:"你的出生日期 —— 用来定出你自己那张牌。只在本地计算，不上传到任何地方",
+  lbl:"你的出生日期 —— 按 YYYY-MM-DD 填写，用来定出你自己那张牌；只在本地计算。",
+  datePlaceholder:"1988-11-03",
+  dateInvalid:"请按 YYYY-MM-DD 填一个真实日期，例如 1988-11-03。",
+  dateRange:"请输入 1900-01-01 到 2100-12-31 之间的日期。",
   go:"生成我的牌", hint:"一天一读，不能重抽 —— 明天再来。",
   up:"正位", rev:"逆位",
   shared:"今日 · 全世界同一张",
@@ -665,6 +675,7 @@ function paintChrome(){
   $("tagDay").textContent=t.shared; $("tagBirth").textContent=t.yours;
   $("t5").textContent=t.t5; $("t6").textContent=t.t6; $("t7").textContent=t.t7;
   $("lbl").textContent=t.lbl; $("go").textContent=t.go; $("hint").textContent=t.hint;
+  $("bd").placeholder=t.datePlaceholder;
   $("t1").textContent=t.t1; $("t2").textContent=t.t2; $("t3").textContent=t.t3; $("t4").textContent=t.t4;
   $("copy").textContent=t.copy; $("save").textContent=t.save;
   $("dsum").textContent=t.dsum; $("dnote").innerHTML=t.dnote;
@@ -677,9 +688,44 @@ function paintChrome(){
   document.documentElement.lang = LANG==="zh" ? "zh-CN" : "en";
 }
 
+function parseBirthDate(value){
+  const raw=String(value||"").trim();
+  if(!raw) return { error:"empty" };
+  const m=raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(!m) return { error:"invalid" };
+  const y=Number(m[1]), mo=Number(m[2]), d=Number(m[3]);
+  if(y<1900 || y>2100) return { error:"range" };
+  const probe=new Date(Date.UTC(y, mo-1, d));
+  if(probe.getUTCFullYear()!==y || probe.getUTCMonth()!==mo-1 || probe.getUTCDate()!==d) {
+    return { error:"invalid" };
+  }
+  return { iso:`${m[1]}-${String(mo).padStart(2,"0")}-${String(d).padStart(2,"0")}` };
+}
+
+function showDateError(kind){
+  const t=T[LANG], input=$("bd"), note=$("date-error");
+  LAST=null;
+  $("out").classList.remove("on");
+  if(kind==="empty"){
+    note.hidden=true;
+    note.textContent="";
+    input.removeAttribute("aria-invalid");
+  }else{
+    note.textContent=kind==="range"?t.dateRange:t.dateInvalid;
+    note.hidden=false;
+    input.setAttribute("aria-invalid","true");
+  }
+  input.focus();
+}
+
 function reveal(){
-  const bd=$("bd").value;
-  if(!bd){ $("bd").focus(); return; }
+  const parsed=parseBirthDate($("bd").value);
+  if(parsed.error){ showDateError(parsed.error); return; }
+  const bd=parsed.iso;
+  $("bd").value=bd;
+  $("date-error").hidden=true;
+  $("date-error").textContent="";
+  $("bd").removeAttribute("aria-invalid");
   try{ localStorage.setItem("dd.bd",bd); }catch(e){}
   const t=T[LANG];
 
@@ -795,6 +841,12 @@ $("go").addEventListener("click",reveal);
 $("copy").addEventListener("click",copyText);
 $("save").addEventListener("click",shareImage);
 $("bd").addEventListener("change",reveal);
+$("bd").addEventListener("input",function(){
+  if(!this.getAttribute("aria-invalid")) return;
+  $("date-error").hidden=true;
+  $("date-error").textContent="";
+  this.removeAttribute("aria-invalid");
+});
 
 /* ══════════════════ 五、分享图导出 · share as image ══════════════════ */
 

@@ -15,6 +15,8 @@ plain sight.
 
 **Live: [daily.dqquan.com](https://daily.dqquan.com/)** · Single file · Installable (PWA) · Works offline · MIT
 
+Birth dates are entered in the locale-independent `YYYY-MM-DD` format so the English and Chinese interfaces never inherit the operating system's mixed-language date control.
+
 ![The Daily Decan](screenshot.png)
 
 ---
